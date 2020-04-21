@@ -195,6 +195,10 @@ private slots:
 
     void on_btn_Delete_Class_clicked();
 
+    void on_rad_Btn_Polygon_clicked(bool checked);
+
+    void on_spinBox_Polygon_Sides_valueChanged(int arg1);
+
 private:
     /*!
      * \brief ui

@@ -21,11 +21,36 @@ void Canvas::mousePressEvent(QMouseEvent *ev){
         qDebug() << "Shape index is" << shapeIndex;
         lastMousePos = ev->pos();
 
-        if(shapeIndex!= 100){
+
+        if(shapeIndex == 3 && !drawing){
+            pointList = new int[polyPoints*2];
+            pointIndex = 0;
+            pointList[0] = currentMousePos.x();
+            pointList[1] = currentMousePos.y();
+            qDebug() << "placed first point";
+            pointIndex++;
             drawing = true;
+
+        }
+        else if(shapeIndex == 3 && drawing){
+            pointList[pointIndex] = currentMousePos.x();
+            pointList[pointIndex + 1] = currentMousePos.y();
+            qDebug() << "placed point at index" << pointIndex;
+//            currentPolygon.setPoint(0,100,200);
+//            currentPolygon.setPoint(1,currentMousePos);
+            pointIndex++;
+            if(pointIndex == polyPoints + 1){
+                currentPolygon.putPoints(0,polyPoints,pointList);
+                drawing = false;
+                polygonList.append(currentPolygon);
+            }
+
         }
         //update();
-
+        if(shapeIndex >= 0 && shapeIndex <= 2){
+            drawing = true;
+        }
+        update();
     }
 }
 
@@ -37,10 +62,11 @@ void Canvas::mouseMoveEvent(QMouseEvent *ev){
 }
 
 void Canvas::mouseReleaseEvent(QMouseEvent *ev){
-    if(drawing){
+    if(drawing && shapeIndex != 3){
         drawing = false;
         polygonList.append(currentPolygon);
     }
+    update();
 }
 
 
@@ -92,6 +118,23 @@ void Canvas::paintEvent(QPaintEvent *ev){
         QPoint* tv2 =new QPoint(lastMousePos.x() ,currentMousePos.y());
         currentPolygon.setPoints(3,lastMousePos.x(),lastMousePos.y(),currentMousePos.x(),currentMousePos.y(),tv2->x(),tv2->y());
         qDebug() << "v2 is" << tv2->x() << tv2->y();
+        painter.drawPolygon(currentPolygon);
+    }
+
+    else if(shapeIndex == 3){
+        int initalisedPoints = 0;
+        for(int i = 0; i < polyPoints ; i++){
+            //if(!pointList[i].isNull()){initalisedPoints++;}
+
+        }
+        for(int j = 0; j< initalisedPoints ; j++){
+
+
+        }
+//        currentPolygon.setPoint(0,200,200);
+//        currentPolygon.setPoint(1,300,300);
+//        currentPolygon.setPoint(0,400,200);
+//        currentPolygon.setPoints(3,200,200,300,300,400,200);
         painter.drawPolygon(currentPolygon);
     }
 
