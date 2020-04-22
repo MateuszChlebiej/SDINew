@@ -140,3 +140,12 @@ void Canvas::paintEvent(QPaintEvent *ev){
 
     painter.end();
 }
+
+QList<QPoint> Canvas::getPoints(int numVertecies, int listIndex){
+    QList<QPoint> pointList;
+    for(int i = 0; i < numVertecies; i++){
+        pointList.append(polygonList[listIndex].point(i));
+
+    }
+    return pointList;
+}

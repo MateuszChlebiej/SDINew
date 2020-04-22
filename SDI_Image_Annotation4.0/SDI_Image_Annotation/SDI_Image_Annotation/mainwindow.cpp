@@ -240,3 +240,28 @@ void MainWindow::on_spinBox_Polygon_Sides_valueChanged(int arg1)
 {
     ui->canvas->polyPoints = std::max(arg1,3);
 }
+
+void MainWindow::makeAnnotationFile(){
+    QString fileContents = "";
+    //num annotated images
+    //for each image
+    //file name
+    // num shapes
+    int numShapes = ui->canvas->polygonList.size();
+    fileContents.append(QString::number(numShapes) + ",\n");
+    //for each shape:
+    for(QPolygon polygon: ui->canvas->polygonList){
+        //num vertecies:
+        int numVerticies = ui->canvas->polygonList.size();
+
+        fileContents.append(QString::number(numVerticies) + ",\n");
+        QList<QPoint> pointList = ui->canvas->getPoints(numVerticies,ui->canvas->polygonList.indexOf(polygon));
+        //each vertex
+        for(QPoint point: pointList){
+            fileContents.append(QString::number(point.x()) + "," + QString::number(point.y()) + ",\n");
+        }
+
+    }
+    //save string to file
+
+}

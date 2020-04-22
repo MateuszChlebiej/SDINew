@@ -29,6 +29,7 @@ public:
     QImage image;
 
     int shapeIndex = 100;
+    QList<QPoint> getPoints(int numVertecies, int listIndex);
 protected:
     void mousePressEvent(QMouseEvent *ev) override;
     void mouseMoveEvent(QMouseEvent *ev) override;

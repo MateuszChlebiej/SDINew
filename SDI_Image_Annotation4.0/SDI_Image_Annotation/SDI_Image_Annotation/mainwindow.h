@@ -229,6 +229,6 @@ private:
      */
     QStringList classes_list;
 
-
+    void makeAnnotationFile();
 };
 #endif // MAINWINDOW_H
