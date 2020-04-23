@@ -198,6 +198,11 @@ private slots:
     void on_btn_Save_Annotation_clicked();
 
     void on_btn_Load_Annotation_clicked();
+    void on_Rad_Btn_Edit_toggled(bool checked);
+
+    void on_rad_Btn_Polygon_toggled(bool checked);
+
+    void on_spinBox_Polygon_Sides_valueChanged(int arg1);
 
 private:
     /*!

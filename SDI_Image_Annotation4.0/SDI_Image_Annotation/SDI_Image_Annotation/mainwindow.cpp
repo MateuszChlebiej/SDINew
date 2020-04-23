@@ -59,7 +59,7 @@ void MainWindow::on_btn_Select_Image_Folder_clicked()
 
 
             list.InsertNode(lineNum,var.baseName(),var.filePath());
-
+            ui->canvas->imageList.append(Image(QImage(var.filePath()),var.filePath()));
 
         }
    }
@@ -74,6 +74,21 @@ void MainWindow::on_btn_Select_Image_Folder_clicked()
 //SELECTING AN IMAGE TO LOAD INTO CANVAS
 void MainWindow::on_image_List_currentTextChanged(const QString &currentText)
 {
+//    for(Image image: ui->canvas->imageList){
+//        if(operator==(ui->canvas->currentImage.fileName,image.fileName)){
+//            //replace image
+//            qDebug() << "image has " << ui->canvas->currentImage.polygonList.size() << " shapes";
+//            image = ui->canvas->currentImage;
+//            qDebug() << "image saved with " << image.polygonList.size() << " shapes";
+////            qDebug() << "current poly has " << ui->canvas->currentImage.currentPolygon.size() << "corners";
+//            break;
+//        }
+//    }
+    for(int i = 0 ; i < ui->canvas->imageList.size();i++){
+        if(operator==(ui->canvas->currentImage.fileName,ui->canvas->imageList[i].fileName)){
+            ui->canvas->imageList.replace(i,ui->canvas->currentImage);
+        }
+    }
     if(currentText == ""){
         qDebug() << "NoItem";
     }
@@ -83,11 +98,22 @@ void MainWindow::on_image_List_currentTextChanged(const QString &currentText)
         //Find the image path by looking at Vector with image name and full path.
         int file_path_index = image_data.indexOf(currentText)-1;
         QString filename = image_data[file_path_index];
+
+        for(Image image: ui->canvas->imageList){
+            if(operator==(filename,image.fileName)){
+                ui->canvas->currentImage = image;
+                qDebug() << "image loaded with " << ui->canvas->currentImage.polygonList.size() << " shapes";
+                qDebug() << "current poly has " << ui->canvas->currentImage.currentPolygon.size() << "corners";
+                break;
+            }
+        }
+
         //Send corresponding image to canvas.
-        QImage image(filename);
-        ui->canvas->setPixmap(QPixmap::fromImage(image));
+        //QImage image(filename);
+        ui->canvas->setPixmap(QPixmap::fromImage(ui->canvas->currentImage.image));
+        qDebug() << "folder has  " << ui->canvas->imageList.size() << " images";
         //set canvas image to current image
-    ui->canvas->image = image;
+    //ui->canvas->image = image;
     }
 }
 
@@ -234,6 +260,7 @@ void MainWindow::on_btn_Delete_Class_clicked()
     }
 }
 
+
 void MainWindow::on_btn_Save_Annotation_clicked()
 {
     QString json_filter = "JSON (*.json)";
@@ -303,4 +330,19 @@ void MainWindow::on_btn_Load_Annotation_clicked()
              QMessageBox::critical(this,tr("Error"),input.errorString());
         }
     }
+
+void MainWindow::on_Rad_Btn_Edit_toggled(bool checked)
+{
+    ui->canvas->shapeIndex = 4;
+}
+
+void MainWindow::on_rad_Btn_Polygon_toggled(bool checked)
+{
+    ui->canvas->shapeIndex = 3;
+}
+
+void MainWindow::on_spinBox_Polygon_Sides_valueChanged(int arg1)
+{
+    ui->canvas->polyPoints = std::max(arg1,3);
+
 }

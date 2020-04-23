@@ -2,13 +2,18 @@
 #define IMAGE_H
 
 #include <QObject>
+#include<QLabel>
 
-class Image : public QObject
+class Image
 {
-    Q_OBJECT
-public:
 
-    explicit Image(QObject *parent = nullptr);
+public:
+    QImage image;
+    QString fileName;
+    QPolygon currentPolygon;
+    QList<QPolygon> polygonList;
+    Image();
+    Image(QImage imageData,QString filename);
     //Overload Constructer
 
     /*!
@@ -69,7 +74,7 @@ private:
 
 
 
-signals:
+
 
 };
 

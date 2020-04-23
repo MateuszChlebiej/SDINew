@@ -15,6 +15,13 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="1">
+     <widget class="Canvas" name="canvas">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="vertical_Selection_Panel">
       <property name="sizeConstraint">
@@ -307,7 +314,22 @@
       </item>
       <item>
        <layout class="QGridLayout" name="grid_Shapes_Pane">
-        <item row="2" column="1" colspan="2">
+        <item row="4" column="0">
+         <widget class="QRadioButton" name="rad_Btn_Trapezium">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Trapezium</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QSpinBox" name="spinBox_Polygon_Sides"/>
+        </item>
+        <item row="4" column="1" colspan="2">
          <widget class="QRadioButton" name="rad_Btn_Triangle">
           <property name="font">
            <font>
@@ -316,6 +338,18 @@
           </property>
           <property name="text">
            <string>Triangle</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="rad_Btn_Rectangle">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Rectangle</string>
           </property>
          </widget>
         </item>
@@ -334,30 +368,6 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QRadioButton" name="rad_Btn_Rectangle">
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Rectangle</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QRadioButton" name="rad_Btn_Trapezium">
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Trapezium</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="1">
          <widget class="QRadioButton" name="rad_Btn_Polygon">
           <property name="font">
@@ -370,9 +380,6 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="2">
-         <widget class="QSpinBox" name="spinBox_Polygon_Sides"/>
-        </item>
         <item row="1" column="3">
          <widget class="QLabel" name="lbl_Polygon_Side">
           <property name="text">
@@ -380,16 +387,21 @@
           </property>
          </widget>
         </item>
+        <item row="5" column="0">
+         <widget class="QRadioButton" name="Rad_Btn_Edit">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Edit</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>
-    </item>
-    <item row="0" column="1">
-     <widget class="Canvas" name="canvas">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>
@@ -399,7 +411,7 @@
      <x>0</x>
      <y>0</y>
      <width>1198</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
