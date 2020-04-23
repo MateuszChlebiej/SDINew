@@ -12,13 +12,21 @@ private:
 public:
 
     List(void){head=NULL;}
-
+    ~List(void);
+    QStringList name_List;
 
     bool IsEmpty();
-    Node* InsertNode(int index, QString,QString);
-    int FindNode(double x);
-    int DeleteNode(double x);
+    Node* InsertNodeClass(int index, QString);
+    Node* InsertNodeImage(int index, QString,QString,QString);
+    int FindNodeGiveIndex(QString x);
+    QString FindNodeGivePath(QString x);
+    int DeleteNode(QString x);
+    int DeleteList();
     void DisplayList(void);
+    void GetNameList(void);
+
+    QStringList GetModifiedList(QString);
+    int CountItems(void);
 
 };
 
