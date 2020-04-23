@@ -230,3 +230,18 @@ void MainWindow::on_btn_Delete_Class_clicked()
          QMessageBox::warning(this,"No Selection","Please select which class you want to delete.");
     }
 }
+
+void MainWindow::on_Rad_Btn_Edit_toggled(bool checked)
+{
+    ui->canvas->shapeIndex = 4;
+}
+
+void MainWindow::on_rad_Btn_Polygon_toggled(bool checked)
+{
+    ui->canvas->shapeIndex = 3;
+}
+
+void MainWindow::on_spinBox_Polygon_Sides_valueChanged(int arg1)
+{
+    ui->canvas->polyPoints = std::max(arg1,3);
+}

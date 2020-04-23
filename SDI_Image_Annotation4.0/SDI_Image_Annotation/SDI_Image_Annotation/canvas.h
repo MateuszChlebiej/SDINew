@@ -23,7 +23,9 @@ public:
     const int trapeziumDistanceConstant = 30;
     int trapDist;
     bool drawing = false;
-
+    int pointIndex = 0;
+    int polyPoints = 3;
+    int* pointList;
     QImage image;
 
     int shapeIndex = 100;

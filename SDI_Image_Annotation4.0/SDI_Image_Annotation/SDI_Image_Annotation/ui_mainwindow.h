@@ -35,6 +35,7 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QFormLayout *formLayout;
+    Canvas *canvas;
     QVBoxLayout *vertical_Selection_Panel;
     QVBoxLayout *vertical_Image_Pane;
     QFrame *line_4;
@@ -65,14 +66,14 @@ public:
     QLabel *folder_Path_Annotation;
     QFrame *line_1;
     QGridLayout *grid_Shapes_Pane;
-    QRadioButton *rad_Btn_Triangle;
-    QLabel *lbl_Panel_Shapes_Name;
-    QRadioButton *rad_Btn_Rectangle;
     QRadioButton *rad_Btn_Trapezium;
-    QRadioButton *rad_Btn_Polygon;
     QSpinBox *spinBox_Polygon_Sides;
+    QRadioButton *rad_Btn_Triangle;
+    QRadioButton *rad_Btn_Rectangle;
+    QLabel *lbl_Panel_Shapes_Name;
+    QRadioButton *rad_Btn_Polygon;
     QLabel *lbl_Polygon_Side;
-    Canvas *canvas;
+    QRadioButton *Rad_Btn_Edit;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -85,6 +86,11 @@ public:
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         formLayout = new QFormLayout(centralwidget);
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
+        canvas = new Canvas(centralwidget);
+        canvas->setObjectName(QString::fromUtf8("canvas"));
+
+        formLayout->setWidget(0, QFormLayout::FieldRole, canvas);
+
         vertical_Selection_Panel = new QVBoxLayout();
         vertical_Selection_Panel->setObjectName(QString::fromUtf8("vertical_Selection_Panel"));
         vertical_Selection_Panel->setSizeConstraint(QLayout::SetDefaultConstraint);
@@ -268,19 +274,24 @@ public:
 
         grid_Shapes_Pane = new QGridLayout();
         grid_Shapes_Pane->setObjectName(QString::fromUtf8("grid_Shapes_Pane"));
-        rad_Btn_Triangle = new QRadioButton(centralwidget);
-        rad_Btn_Triangle->setObjectName(QString::fromUtf8("rad_Btn_Triangle"));
+        rad_Btn_Trapezium = new QRadioButton(centralwidget);
+        rad_Btn_Trapezium->setObjectName(QString::fromUtf8("rad_Btn_Trapezium"));
         QFont font2;
         font2.setPointSize(10);
+        rad_Btn_Trapezium->setFont(font2);
+
+        grid_Shapes_Pane->addWidget(rad_Btn_Trapezium, 4, 0, 1, 1);
+
+        spinBox_Polygon_Sides = new QSpinBox(centralwidget);
+        spinBox_Polygon_Sides->setObjectName(QString::fromUtf8("spinBox_Polygon_Sides"));
+
+        grid_Shapes_Pane->addWidget(spinBox_Polygon_Sides, 1, 2, 1, 1);
+
+        rad_Btn_Triangle = new QRadioButton(centralwidget);
+        rad_Btn_Triangle->setObjectName(QString::fromUtf8("rad_Btn_Triangle"));
         rad_Btn_Triangle->setFont(font2);
 
-        grid_Shapes_Pane->addWidget(rad_Btn_Triangle, 2, 1, 1, 2);
-
-        lbl_Panel_Shapes_Name = new QLabel(centralwidget);
-        lbl_Panel_Shapes_Name->setObjectName(QString::fromUtf8("lbl_Panel_Shapes_Name"));
-        lbl_Panel_Shapes_Name->setFont(font);
-
-        grid_Shapes_Pane->addWidget(lbl_Panel_Shapes_Name, 0, 0, 1, 1);
+        grid_Shapes_Pane->addWidget(rad_Btn_Triangle, 4, 1, 1, 2);
 
         rad_Btn_Rectangle = new QRadioButton(centralwidget);
         rad_Btn_Rectangle->setObjectName(QString::fromUtf8("rad_Btn_Rectangle"));
@@ -288,11 +299,11 @@ public:
 
         grid_Shapes_Pane->addWidget(rad_Btn_Rectangle, 1, 0, 1, 1);
 
-        rad_Btn_Trapezium = new QRadioButton(centralwidget);
-        rad_Btn_Trapezium->setObjectName(QString::fromUtf8("rad_Btn_Trapezium"));
-        rad_Btn_Trapezium->setFont(font2);
+        lbl_Panel_Shapes_Name = new QLabel(centralwidget);
+        lbl_Panel_Shapes_Name->setObjectName(QString::fromUtf8("lbl_Panel_Shapes_Name"));
+        lbl_Panel_Shapes_Name->setFont(font);
 
-        grid_Shapes_Pane->addWidget(rad_Btn_Trapezium, 2, 0, 1, 1);
+        grid_Shapes_Pane->addWidget(lbl_Panel_Shapes_Name, 0, 0, 1, 1);
 
         rad_Btn_Polygon = new QRadioButton(centralwidget);
         rad_Btn_Polygon->setObjectName(QString::fromUtf8("rad_Btn_Polygon"));
@@ -300,15 +311,16 @@ public:
 
         grid_Shapes_Pane->addWidget(rad_Btn_Polygon, 1, 1, 1, 1);
 
-        spinBox_Polygon_Sides = new QSpinBox(centralwidget);
-        spinBox_Polygon_Sides->setObjectName(QString::fromUtf8("spinBox_Polygon_Sides"));
-
-        grid_Shapes_Pane->addWidget(spinBox_Polygon_Sides, 1, 2, 1, 1);
-
         lbl_Polygon_Side = new QLabel(centralwidget);
         lbl_Polygon_Side->setObjectName(QString::fromUtf8("lbl_Polygon_Side"));
 
         grid_Shapes_Pane->addWidget(lbl_Polygon_Side, 1, 3, 1, 1);
+
+        Rad_Btn_Edit = new QRadioButton(centralwidget);
+        Rad_Btn_Edit->setObjectName(QString::fromUtf8("Rad_Btn_Edit"));
+        Rad_Btn_Edit->setFont(font2);
+
+        grid_Shapes_Pane->addWidget(Rad_Btn_Edit, 5, 0, 1, 1);
 
 
         vertical_Selection_Panel->addLayout(grid_Shapes_Pane);
@@ -316,15 +328,10 @@ public:
 
         formLayout->setLayout(0, QFormLayout::LabelRole, vertical_Selection_Panel);
 
-        canvas = new Canvas(centralwidget);
-        canvas->setObjectName(QString::fromUtf8("canvas"));
-
-        formLayout->setWidget(0, QFormLayout::FieldRole, canvas);
-
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1198, 21));
+        menubar->setGeometry(QRect(0, 0, 1198, 20));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -342,6 +349,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        canvas->setText(QString());
         lbl_Panel_Name_Image->setText(QCoreApplication::translate("MainWindow", "Images", nullptr));
         folder_Path_Image->setText(QCoreApplication::translate("MainWindow", "Path", nullptr));
         dropdown_Sort_Image->setItemText(0, QCoreApplication::translate("MainWindow", "Ascending Name", nullptr));
@@ -370,13 +378,13 @@ public:
         btn_Load_Annotation->setText(QCoreApplication::translate("MainWindow", "Load Annotations", nullptr));
         lbl_Current_Annotation_FIle->setText(QCoreApplication::translate("MainWindow", "Current annotation file:", nullptr));
         folder_Path_Annotation->setText(QCoreApplication::translate("MainWindow", "......", nullptr));
-        rad_Btn_Triangle->setText(QCoreApplication::translate("MainWindow", "Triangle", nullptr));
-        lbl_Panel_Shapes_Name->setText(QCoreApplication::translate("MainWindow", "Shapes", nullptr));
-        rad_Btn_Rectangle->setText(QCoreApplication::translate("MainWindow", "Rectangle", nullptr));
         rad_Btn_Trapezium->setText(QCoreApplication::translate("MainWindow", "Trapezium", nullptr));
+        rad_Btn_Triangle->setText(QCoreApplication::translate("MainWindow", "Triangle", nullptr));
+        rad_Btn_Rectangle->setText(QCoreApplication::translate("MainWindow", "Rectangle", nullptr));
+        lbl_Panel_Shapes_Name->setText(QCoreApplication::translate("MainWindow", "Shapes", nullptr));
         rad_Btn_Polygon->setText(QCoreApplication::translate("MainWindow", "Polygon", nullptr));
         lbl_Polygon_Side->setText(QCoreApplication::translate("MainWindow", "Sides", nullptr));
-        canvas->setText(QString());
+        Rad_Btn_Edit->setText(QCoreApplication::translate("MainWindow", "Edit", nullptr));
     } // retranslateUi
 
 };
