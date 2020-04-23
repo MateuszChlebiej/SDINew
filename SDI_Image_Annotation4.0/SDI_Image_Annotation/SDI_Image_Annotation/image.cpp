@@ -1,9 +1,12 @@
 #include "image.h"
 
-Image::Image(QObject *parent) : QObject(parent)
+Image::Image(QImage imageData, QString filename)
 {
+    image = imageData;
+    fileName = filename;
 
 }
+Image::Image(){}
 
 
 void Image::set_image_name(QString name){

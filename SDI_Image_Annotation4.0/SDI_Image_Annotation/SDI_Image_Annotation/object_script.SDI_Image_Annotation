@@ -9,5 +9,4 @@ shape.o
 moc_addclasswindow.o
 moc_annotationclass.o
 moc_canvas.o
-moc_image.o
 moc_mainwindow.o

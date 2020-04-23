@@ -11,6 +11,7 @@ Canvas::Canvas(QWidget *parent)
     setAttribute(Qt::WA_StaticContents);
 
     QPolygon test;
+    //currentImage = Image();
 //    test.setPoints(2,100,100,300,300);
 //    polygonList.append(test);
 }
@@ -40,9 +41,9 @@ void Canvas::mousePressEvent(QMouseEvent *ev){
 //            currentPolygon.setPoint(1,currentMousePos);
             pointIndex++;
             if(pointIndex == polyPoints + 1){
-                currentPolygon.putPoints(0,polyPoints,pointList);
+                currentImage.currentPolygon.putPoints(0,polyPoints,pointList);
                 drawing = false;
-                polygonList.append(currentPolygon);
+                currentImage.polygonList.append(currentImage.currentPolygon);
             }
 
         }
@@ -64,7 +65,8 @@ void Canvas::mouseMoveEvent(QMouseEvent *ev){
 void Canvas::mouseReleaseEvent(QMouseEvent *ev){
     if(drawing && shapeIndex != 3){
         drawing = false;
-        polygonList.append(currentPolygon);
+        currentImage.polygonList.append(currentImage.currentPolygon);
+        qDebug() << "shape list has " << currentImage.polygonList.size();
     }
     update();
 }
@@ -80,14 +82,14 @@ void Canvas::paintEvent(QPaintEvent *ev){
     painter.begin(this);
 
     //paint image;
-    if(!image.isNull())
+    if(!currentImage.image.isNull())
     {
-        painter.drawImage(0,0,image);
+        painter.drawImage(0,0,currentImage.image);
     }
 
     //paint existing polygons
-    if(!polygonList.isEmpty()){
-        for(QPolygon polygon: polygonList){
+    if(!currentImage.polygonList.isEmpty()){
+        for(QPolygon polygon: currentImage.polygonList){
             painter.drawPolygon(polygon);
 
         }
@@ -97,8 +99,8 @@ void Canvas::paintEvent(QPaintEvent *ev){
 
     if(shapeIndex == 0){
 
-        currentPolygon.setPoints(4,lastMousePos.x(),lastMousePos.y(),currentMousePos.x(),lastMousePos.y(),currentMousePos.x(),currentMousePos.y(),lastMousePos.x(),currentMousePos.y());
-        painter.drawPolygon(currentPolygon);
+        currentImage.currentPolygon.setPoints(4,lastMousePos.x(),lastMousePos.y(),currentMousePos.x(),lastMousePos.y(),currentMousePos.x(),currentMousePos.y(),lastMousePos.x(),currentMousePos.y());
+        painter.drawPolygon(currentImage.currentPolygon);
 
     }
 
@@ -110,15 +112,15 @@ void Canvas::paintEvent(QPaintEvent *ev){
         //last vertex where mouse is currently
 
         //set points of trapezium
-        currentPolygon.setPoints(4,lastMousePos.x(),lastMousePos.y(),v2->x(),v2->y(),currentMousePos.x(),currentMousePos.y(),v3->x(),v3->y());
-        painter.drawPolygon(currentPolygon);
+        currentImage.currentPolygon.setPoints(4,lastMousePos.x(),lastMousePos.y(),v2->x(),v2->y(),currentMousePos.x(),currentMousePos.y(),v3->x(),v3->y());
+        painter.drawPolygon(currentImage.currentPolygon);
     }
 
     else if(shapeIndex == 2){
         QPoint* tv2 =new QPoint(lastMousePos.x() ,currentMousePos.y());
-        currentPolygon.setPoints(3,lastMousePos.x(),lastMousePos.y(),currentMousePos.x(),currentMousePos.y(),tv2->x(),tv2->y());
+        currentImage.currentPolygon.setPoints(3,lastMousePos.x(),lastMousePos.y(),currentMousePos.x(),currentMousePos.y(),tv2->x(),tv2->y());
         qDebug() << "v2 is" << tv2->x() << tv2->y();
-        painter.drawPolygon(currentPolygon);
+        painter.drawPolygon(currentImage.currentPolygon);
     }
 
     else if(shapeIndex == 3){
@@ -135,7 +137,7 @@ void Canvas::paintEvent(QPaintEvent *ev){
 //        currentPolygon.setPoint(1,300,300);
 //        currentPolygon.setPoint(0,400,200);
 //        currentPolygon.setPoints(3,200,200,300,300,400,200);
-        painter.drawPolygon(currentPolygon);
+        painter.drawPolygon(currentImage.currentPolygon);
     }
 
     painter.end();

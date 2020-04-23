@@ -6,6 +6,7 @@
 #include<QMouseEvent>
 #include<QDebug>
 #include "shape.h"
+#include "image.h"
 #pragma once
 class Canvas: public QLabel{
     Q_OBJECT
@@ -17,8 +18,7 @@ public:
     QPoint lastMousePos = QPoint(0,0);
     QPoint currentMousePos = QPoint(0,0);
 
-    QPolygon currentPolygon;
-    QList<QPolygon> polygonList;
+
 
     const int trapeziumDistanceConstant = 30;
     int trapDist;
@@ -26,8 +26,8 @@ public:
     int pointIndex = 0;
     int polyPoints = 3;
     int* pointList;
-    QImage image;
-
+    Image currentImage;
+    QList<Image> imageList;
     int shapeIndex = 100;
 protected:
     void mousePressEvent(QMouseEvent *ev) override;
