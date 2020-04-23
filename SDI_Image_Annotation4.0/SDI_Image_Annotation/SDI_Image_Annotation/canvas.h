@@ -16,7 +16,9 @@ public:
     QPixmap pixmap;
     QPoint lastMousePos = QPoint(0,0);
     QPoint currentMousePos = QPoint(0,0);
-
+    int pointIndex = 0;
+    int polyPoints = 3;
+    int* pointList;
     QPolygon currentPolygon;
     QList<QPolygon> polygonList;
 
@@ -27,6 +29,7 @@ public:
     QImage image;
 
     int shapeIndex = 100;
+    QList<QPoint> getPoints(int numVertecies, int listIndex);
 protected:
     void mousePressEvent(QMouseEvent *ev) override;
     void mouseMoveEvent(QMouseEvent *ev) override;
