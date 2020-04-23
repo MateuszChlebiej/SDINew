@@ -195,6 +195,10 @@ private slots:
 
     void on_btn_Delete_Class_clicked();
 
+    void on_btn_Save_Annotation_clicked();
+
+    void on_btn_Load_Annotation_clicked();
+
 private:
     /*!
      * \brief ui

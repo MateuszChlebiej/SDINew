@@ -8,6 +8,9 @@
 #include <qdebug.h>
 #include <QVector2D>
 #include <QCursor>
+#include <QJsonDocument>
+#include <QMessageBox>
+#include <QJsonObject>
 #include "image.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -228,5 +231,76 @@ void MainWindow::on_btn_Delete_Class_clicked()
     }
     else{
          QMessageBox::warning(this,"No Selection","Please select which class you want to delete.");
+    }
+}
+
+void MainWindow::on_btn_Save_Annotation_clicked()
+{
+    QString json_filter = "JSON (*.json)";
+    QString file = QFileDialog::getSaveFileName(this,tr("Save File"),"/",json_filter);
+
+    if(file.isEmpty()){
+
+    }
+    else{
+        QString value1 = "Tom";
+        QString value2 = "Jim";
+        QString value3 = "Mat";
+        QString value4 = "Bob";
+
+        QJsonDocument doc;
+        QJsonObject obj;
+        obj["Value1"] = value1;
+        obj["Value2"] = value2;
+        obj["Value3"] = value3;
+        obj["Value4"] = value4;
+
+        doc.setObject(obj);
+        QByteArray data_json = doc.toJson();
+        QFile output(file);
+        if(output.open(QIODevice::WriteOnly | QIODevice::Text)){
+            output.write(data_json);
+            output.close();
+            QMessageBox::information(this,tr("Message"),tr("Document saved"));
+        }
+        else{
+            QMessageBox::critical(this,tr("Error"),output.errorString());
+        }
+
+    }
+
+}
+
+void MainWindow::on_btn_Load_Annotation_clicked()
+{
+    QString json_filter = "JSON (*.json)";
+    QString file = QFileDialog::getOpenFileName(this,tr("Open File"),"/",json_filter);
+
+    if(file.isEmpty()){
+    }
+    else{
+        QJsonDocument doc;
+        QJsonObject obj;
+        QByteArray data_json;
+        QFile input(file);
+        if(input.open(QIODevice::ReadOnly | QIODevice::Text)){
+            data_json = input.readAll();
+            doc = doc.fromJson(data_json);
+            obj = doc.object();
+
+            QString value1 = obj["Value1"].toString();
+            qDebug()<<value1;
+            QString value2 = obj["Value2"].toString();
+             qDebug()<<value2;
+            QString value3 = obj["Value3"].toString();
+             qDebug()<<value3;
+            QString value4 = obj["Value4"].toString();
+             qDebug()<<value4;
+
+            QMessageBox::information(this,tr("Message"),tr("Document Open"));
+        }
+        else{
+             QMessageBox::critical(this,tr("Error"),input.errorString());
+        }
     }
 }
