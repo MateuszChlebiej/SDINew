@@ -330,6 +330,7 @@ void MainWindow::on_btn_Load_Annotation_clicked()
              QMessageBox::critical(this,tr("Error"),input.errorString());
         }
     }
+}
 
 void MainWindow::on_Rad_Btn_Edit_toggled(bool checked)
 {
