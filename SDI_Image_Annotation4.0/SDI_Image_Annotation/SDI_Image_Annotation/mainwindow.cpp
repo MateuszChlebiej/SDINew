@@ -37,38 +37,8 @@ MainWindow::~MainWindow()
 //SELECTING IMAGE DIRECTORY
 void MainWindow::on_btn_Select_Image_Folder_clicked()
 {
-    int lineNum = 0;
-    List list;
+    readImagesDirectory();
 
-    QStringList arr_image_names;
-    QString folder_name = QFileDialog::getExistingDirectory(this, ("Select Output Folder"),"C:/Users/mateu/Desktop");
-    QDir dir_2(folder_name);
-
-    //Look at each file within directory
-    foreach(QFileInfo var, dir_2.entryInfoList()){
-        //If file suffix == jpg or png
-        if ((var.suffix() == "jpg") || (var.suffix() == "png")){
-            //Store image data in Vectors
-            image_data.append(var.filePath());
-            image_data.append(var.baseName());
-
-            //Pass image name into UI to be displayed
-            ui->image_List->addItem(var.baseName());
-            //Add to list with image names used for sorting.
-            images_list << var.baseName();
-
-
-            list.InsertNode(lineNum,var.baseName(),var.filePath());
-            ui->canvas->imageList.append(Image(QImage(var.filePath()),var.filePath()));
-
-        }
-   }
-
-    list.DisplayList();
-
-
-    //Change gui label showing path of current directory.
-    ui->folder_Path_Image->setText(folder_name);
 }
 
 //SELECTING AN IMAGE TO LOAD INTO CANVAS
@@ -121,7 +91,7 @@ void MainWindow::on_image_List_currentTextChanged(const QString &currentText)
 void MainWindow::on_btn_Select_Class_File_clicked()
 {
 
-   MainWindow::readClassFile("New");
+   MainWindow::readClassFile();
 }
 
 
@@ -129,26 +99,29 @@ void MainWindow::on_dropdown_Sort_Image_activated(int index)
 {
     QStringList sorted_images;
     switch(index){
-
-
         case 0:
-
+            ui->image_List->clear();
+            sorted_images = sortingName(images_list.name_List, ">");
+            ui->image_List->addItems(sorted_images);
 
         break;
 
         case 1:
+            ui->image_List->clear();
+            sorted_images = sortingName(images_list.name_List, "<");
+            ui->image_List->addItems(sorted_images);
 
         break;
 
         case 2:
             ui->image_List->clear();
-            sorted_images = sorting_images(images_list, ">");
+            sorted_images = images_list.GetModifiedList("Ascending");
             ui->image_List->addItems(sorted_images);
         break;
 
         case 3:
             ui->image_List->clear();
-            sorted_images = sorting_images(images_list, "<");
+            sorted_images = images_list.GetModifiedList("Descending");
             ui->image_List->addItems(sorted_images);
         break;
     }
@@ -156,39 +129,25 @@ void MainWindow::on_dropdown_Sort_Image_activated(int index)
 
 void MainWindow::on_dropdown_Sort_Class_activated(int index)
 {
+    QStringList sorted_classes;
     switch(index){
         case 0:
+
             ui->class_List->clear();
-            int size;
-            size= classes_list.count();
-            for(int i = 0; i< size; i++){
-                for(int j=0; j<size-1; j++){
-                    if(classes_list[j]>classes_list[j+1]){
-                        QString tmp;
-                        tmp = classes_list[j];
-                        classes_list[j] = classes_list[j+1];
-                        classes_list[j+1] = tmp;
-                    }
-                }
-            }
-            ui->class_List->addItems(classes_list);
+            qDebug()<<classes_list.name_List;
+            sorted_classes = sortingName(classes_list.name_List,">");
+            qDebug()<<sorted_classes;
+            ui->class_List->addItems(sorted_classes);
 
         break;
 
         case 1:
-        ui->class_List->clear();
-        size= classes_list.count();
-        for(int i = 0; i< size; i++){
-            for(int j=0; j<size-1; j++){
-                if(classes_list[j]<classes_list[j+1]){
-                    QString tmp;
-                    tmp = classes_list[j];
-                    classes_list[j] = classes_list[j+1];
-                    classes_list[j+1] = tmp;
-                }
-            }
-        }
-        ui->class_List->addItems(classes_list);
+            ui->class_List->clear();
+            sorted_classes = sortingName(classes_list.name_List,"<");
+
+            qDebug()<<sorted_classes;
+            ui->class_List->addItems(sorted_classes);
+            qDebug()<<classes_list.name_List;
         break;
     }
 }
@@ -230,7 +189,7 @@ void MainWindow::on_btn_Add_Class_clicked()
 
     addclasswindow = new AddClassWindow();
 
-    QObject::connect(addclasswindow, SIGNAL(classEntered(QString)), this, SLOT(update_class_list_and_file(QString)));
+    QObject::connect(addclasswindow, SIGNAL(classEntered(QString)), this, SLOT(update_class_list_and_file_add(QString)));
     addclasswindow->show();
 }
 
@@ -238,22 +197,7 @@ void MainWindow::on_btn_Delete_Class_clicked()
 {
     if(ui->class_List->selectedItems().size() != 0){
         QString classSelected = ui->class_List->currentItem()->text();
-        QFile f(MainWindow::classFile);
-        if(f.open(QIODevice::ReadWrite | QIODevice::Text)){
-            QString s;
-            QTextStream t(&f);
-            while(!t.atEnd())
-            {
-                QString line = t.readLine();
-                if(!line.contains(classSelected))
-                    s.append(line + "\n");
-            }
-            f.resize(0);
-            t << s;
-            f.close();
-        }
-        MainWindow::readClassFile("Update");
-
+        update_class_list_and_file_delete(classSelected);
     }
     else{
          QMessageBox::warning(this,"No Selection","Please select which class you want to delete.");

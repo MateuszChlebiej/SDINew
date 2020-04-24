@@ -9,8 +9,11 @@ class Node
 public:
 
     Node *next; //Pointer to next
+
+
     QString imageName; //data
     QString imagePath;
+    QString lastMod;
 
 private:
 
