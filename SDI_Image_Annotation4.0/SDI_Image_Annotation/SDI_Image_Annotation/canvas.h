@@ -23,13 +23,23 @@ public:
     const int trapeziumDistanceConstant = 30;
     int trapDist;
     bool drawing = false;
+    bool moving = false;
     int pointIndex = 0;
     int polyPoints = 3;
+    const int pointSelectionTolerance = 10;
+    int moveIndex;
+    int pointMoveIndex;
     int* pointList;
     Image currentImage;
     QList<Image> imageList;
+    QPolygon clipboardPolygon;
+    QPoint currentPoint;
     int shapeIndex = 100;
+
+    void setCurrentClass(QString newClass);
 protected:
+
+
     void mousePressEvent(QMouseEvent *ev) override;
     void mouseMoveEvent(QMouseEvent *ev) override;
     void mouseReleaseEvent(QMouseEvent *ev) override;
@@ -38,5 +48,7 @@ protected:
 
 
 private:
+
+    QString currentClass;
 
 };

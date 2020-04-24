@@ -10,6 +10,11 @@
 
 //}
 
+Shapes::Shapes(QString name, QPolygon poly){
+    className = name;
+    shape = poly;
+}
+
 Rectangle::Rectangle(QPoint *v1){
     QPainter painter;
     int x = int(v1->x());

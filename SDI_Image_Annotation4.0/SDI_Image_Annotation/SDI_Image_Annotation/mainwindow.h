@@ -204,6 +204,12 @@ private slots:
 
     void on_spinBox_Polygon_Sides_valueChanged(int arg1);
 
+    void on_rad_Btn_Move_Corner_toggled(bool checked);
+
+    void on_rad_Btn_Copy_Paste_toggled(bool checked);
+
+    void on_class_List_currentTextChanged(const QString &currentText);
+
 private:
     /*!
      * \brief ui

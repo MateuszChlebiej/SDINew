@@ -2231,6 +2231,11 @@ mainwindow.o: mainwindow.cpp C:/Qt/5.14.1/mingw73_32/include/QtWidgets/QFileDial
 		C:/Qt/5.14.1/mingw73_32/include/QtCore/qdatetime.h \
 		C:/Qt/5.14.1/mingw73_32/include/QtGui/QVector2D \
 		C:/Qt/5.14.1/mingw73_32/include/QtGui/QCursor \
+		C:/Qt/5.14.1/mingw73_32/include/QtCore/QJsonDocument \
+		C:/Qt/5.14.1/mingw73_32/include/QtCore/qjsondocument.h \
+		C:/Qt/5.14.1/mingw73_32/include/QtCore/qjsonvalue.h \
+		C:/Qt/5.14.1/mingw73_32/include/QtCore/QJsonObject \
+		C:/Qt/5.14.1/mingw73_32/include/QtCore/qjsonobject.h \
 		image.h \
 		C:/Qt/5.14.1/mingw73_32/include/QtCore/QObject \
 		C:/Qt/5.14.1/mingw73_32/include/QtWidgets/QLabel \

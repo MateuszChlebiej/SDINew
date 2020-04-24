@@ -314,30 +314,15 @@
       </item>
       <item>
        <layout class="QGridLayout" name="grid_Shapes_Pane">
-        <item row="4" column="0">
-         <widget class="QRadioButton" name="rad_Btn_Trapezium">
+        <item row="5" column="0">
+         <widget class="QRadioButton" name="Rad_Btn_Edit">
           <property name="font">
            <font>
             <pointsize>10</pointsize>
            </font>
           </property>
           <property name="text">
-           <string>Trapezium</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QSpinBox" name="spinBox_Polygon_Sides"/>
-        </item>
-        <item row="4" column="1" colspan="2">
-         <widget class="QRadioButton" name="rad_Btn_Triangle">
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Triangle</string>
+           <string>Move/Delete shape</string>
           </property>
          </widget>
         </item>
@@ -352,6 +337,45 @@
            <string>Rectangle</string>
           </property>
          </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QRadioButton" name="rad_Btn_Polygon">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Polygon</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1" colspan="2">
+         <widget class="QRadioButton" name="rad_Btn_Triangle">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Triangle</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QRadioButton" name="rad_Btn_Move_Corner">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Move Corners</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QSpinBox" name="spinBox_Polygon_Sides"/>
         </item>
         <item row="0" column="0">
          <widget class="QLabel" name="lbl_Panel_Shapes_Name">
@@ -368,15 +392,15 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QRadioButton" name="rad_Btn_Polygon">
+        <item row="4" column="0">
+         <widget class="QRadioButton" name="rad_Btn_Trapezium">
           <property name="font">
            <font>
             <pointsize>10</pointsize>
            </font>
           </property>
           <property name="text">
-           <string>Polygon</string>
+           <string>Trapezium</string>
           </property>
          </widget>
         </item>
@@ -387,15 +411,15 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="0">
-         <widget class="QRadioButton" name="Rad_Btn_Edit">
+        <item row="6" column="0">
+         <widget class="QRadioButton" name="rad_Btn_Copy_Paste">
           <property name="font">
            <font>
             <pointsize>10</pointsize>
            </font>
           </property>
           <property name="text">
-           <string>Edit</string>
+           <string>Copy/Paste</string>
           </property>
          </widget>
         </item>

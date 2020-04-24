@@ -66,14 +66,16 @@ public:
     QLabel *folder_Path_Annotation;
     QFrame *line_1;
     QGridLayout *grid_Shapes_Pane;
-    QRadioButton *rad_Btn_Trapezium;
-    QSpinBox *spinBox_Polygon_Sides;
-    QRadioButton *rad_Btn_Triangle;
-    QRadioButton *rad_Btn_Rectangle;
-    QLabel *lbl_Panel_Shapes_Name;
-    QRadioButton *rad_Btn_Polygon;
-    QLabel *lbl_Polygon_Side;
     QRadioButton *Rad_Btn_Edit;
+    QRadioButton *rad_Btn_Rectangle;
+    QRadioButton *rad_Btn_Polygon;
+    QRadioButton *rad_Btn_Triangle;
+    QRadioButton *rad_Btn_Move_Corner;
+    QSpinBox *spinBox_Polygon_Sides;
+    QLabel *lbl_Panel_Shapes_Name;
+    QRadioButton *rad_Btn_Trapezium;
+    QLabel *lbl_Polygon_Side;
+    QRadioButton *rad_Btn_Copy_Paste;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -274,24 +276,13 @@ public:
 
         grid_Shapes_Pane = new QGridLayout();
         grid_Shapes_Pane->setObjectName(QString::fromUtf8("grid_Shapes_Pane"));
-        rad_Btn_Trapezium = new QRadioButton(centralwidget);
-        rad_Btn_Trapezium->setObjectName(QString::fromUtf8("rad_Btn_Trapezium"));
+        Rad_Btn_Edit = new QRadioButton(centralwidget);
+        Rad_Btn_Edit->setObjectName(QString::fromUtf8("Rad_Btn_Edit"));
         QFont font2;
         font2.setPointSize(10);
-        rad_Btn_Trapezium->setFont(font2);
+        Rad_Btn_Edit->setFont(font2);
 
-        grid_Shapes_Pane->addWidget(rad_Btn_Trapezium, 4, 0, 1, 1);
-
-        spinBox_Polygon_Sides = new QSpinBox(centralwidget);
-        spinBox_Polygon_Sides->setObjectName(QString::fromUtf8("spinBox_Polygon_Sides"));
-
-        grid_Shapes_Pane->addWidget(spinBox_Polygon_Sides, 1, 2, 1, 1);
-
-        rad_Btn_Triangle = new QRadioButton(centralwidget);
-        rad_Btn_Triangle->setObjectName(QString::fromUtf8("rad_Btn_Triangle"));
-        rad_Btn_Triangle->setFont(font2);
-
-        grid_Shapes_Pane->addWidget(rad_Btn_Triangle, 4, 1, 1, 2);
+        grid_Shapes_Pane->addWidget(Rad_Btn_Edit, 5, 0, 1, 1);
 
         rad_Btn_Rectangle = new QRadioButton(centralwidget);
         rad_Btn_Rectangle->setObjectName(QString::fromUtf8("rad_Btn_Rectangle"));
@@ -299,28 +290,51 @@ public:
 
         grid_Shapes_Pane->addWidget(rad_Btn_Rectangle, 1, 0, 1, 1);
 
-        lbl_Panel_Shapes_Name = new QLabel(centralwidget);
-        lbl_Panel_Shapes_Name->setObjectName(QString::fromUtf8("lbl_Panel_Shapes_Name"));
-        lbl_Panel_Shapes_Name->setFont(font);
-
-        grid_Shapes_Pane->addWidget(lbl_Panel_Shapes_Name, 0, 0, 1, 1);
-
         rad_Btn_Polygon = new QRadioButton(centralwidget);
         rad_Btn_Polygon->setObjectName(QString::fromUtf8("rad_Btn_Polygon"));
         rad_Btn_Polygon->setFont(font2);
 
         grid_Shapes_Pane->addWidget(rad_Btn_Polygon, 1, 1, 1, 1);
 
+        rad_Btn_Triangle = new QRadioButton(centralwidget);
+        rad_Btn_Triangle->setObjectName(QString::fromUtf8("rad_Btn_Triangle"));
+        rad_Btn_Triangle->setFont(font2);
+
+        grid_Shapes_Pane->addWidget(rad_Btn_Triangle, 4, 1, 1, 2);
+
+        rad_Btn_Move_Corner = new QRadioButton(centralwidget);
+        rad_Btn_Move_Corner->setObjectName(QString::fromUtf8("rad_Btn_Move_Corner"));
+        rad_Btn_Move_Corner->setFont(font2);
+
+        grid_Shapes_Pane->addWidget(rad_Btn_Move_Corner, 5, 1, 1, 1);
+
+        spinBox_Polygon_Sides = new QSpinBox(centralwidget);
+        spinBox_Polygon_Sides->setObjectName(QString::fromUtf8("spinBox_Polygon_Sides"));
+
+        grid_Shapes_Pane->addWidget(spinBox_Polygon_Sides, 1, 2, 1, 1);
+
+        lbl_Panel_Shapes_Name = new QLabel(centralwidget);
+        lbl_Panel_Shapes_Name->setObjectName(QString::fromUtf8("lbl_Panel_Shapes_Name"));
+        lbl_Panel_Shapes_Name->setFont(font);
+
+        grid_Shapes_Pane->addWidget(lbl_Panel_Shapes_Name, 0, 0, 1, 1);
+
+        rad_Btn_Trapezium = new QRadioButton(centralwidget);
+        rad_Btn_Trapezium->setObjectName(QString::fromUtf8("rad_Btn_Trapezium"));
+        rad_Btn_Trapezium->setFont(font2);
+
+        grid_Shapes_Pane->addWidget(rad_Btn_Trapezium, 4, 0, 1, 1);
+
         lbl_Polygon_Side = new QLabel(centralwidget);
         lbl_Polygon_Side->setObjectName(QString::fromUtf8("lbl_Polygon_Side"));
 
         grid_Shapes_Pane->addWidget(lbl_Polygon_Side, 1, 3, 1, 1);
 
-        Rad_Btn_Edit = new QRadioButton(centralwidget);
-        Rad_Btn_Edit->setObjectName(QString::fromUtf8("Rad_Btn_Edit"));
-        Rad_Btn_Edit->setFont(font2);
+        rad_Btn_Copy_Paste = new QRadioButton(centralwidget);
+        rad_Btn_Copy_Paste->setObjectName(QString::fromUtf8("rad_Btn_Copy_Paste"));
+        rad_Btn_Copy_Paste->setFont(font2);
 
-        grid_Shapes_Pane->addWidget(Rad_Btn_Edit, 5, 0, 1, 1);
+        grid_Shapes_Pane->addWidget(rad_Btn_Copy_Paste, 6, 0, 1, 1);
 
 
         vertical_Selection_Panel->addLayout(grid_Shapes_Pane);
@@ -378,13 +392,15 @@ public:
         btn_Load_Annotation->setText(QCoreApplication::translate("MainWindow", "Load Annotations", nullptr));
         lbl_Current_Annotation_FIle->setText(QCoreApplication::translate("MainWindow", "Current annotation file:", nullptr));
         folder_Path_Annotation->setText(QCoreApplication::translate("MainWindow", "......", nullptr));
-        rad_Btn_Trapezium->setText(QCoreApplication::translate("MainWindow", "Trapezium", nullptr));
-        rad_Btn_Triangle->setText(QCoreApplication::translate("MainWindow", "Triangle", nullptr));
+        Rad_Btn_Edit->setText(QCoreApplication::translate("MainWindow", "Move/Delete shape", nullptr));
         rad_Btn_Rectangle->setText(QCoreApplication::translate("MainWindow", "Rectangle", nullptr));
-        lbl_Panel_Shapes_Name->setText(QCoreApplication::translate("MainWindow", "Shapes", nullptr));
         rad_Btn_Polygon->setText(QCoreApplication::translate("MainWindow", "Polygon", nullptr));
+        rad_Btn_Triangle->setText(QCoreApplication::translate("MainWindow", "Triangle", nullptr));
+        rad_Btn_Move_Corner->setText(QCoreApplication::translate("MainWindow", "Move Corners", nullptr));
+        lbl_Panel_Shapes_Name->setText(QCoreApplication::translate("MainWindow", "Shapes", nullptr));
+        rad_Btn_Trapezium->setText(QCoreApplication::translate("MainWindow", "Trapezium", nullptr));
         lbl_Polygon_Side->setText(QCoreApplication::translate("MainWindow", "Sides", nullptr));
-        Rad_Btn_Edit->setText(QCoreApplication::translate("MainWindow", "Edit", nullptr));
+        rad_Btn_Copy_Paste->setText(QCoreApplication::translate("MainWindow", "Copy/Paste", nullptr));
     } // retranslateUi
 
 };

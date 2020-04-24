@@ -103,7 +103,7 @@ void MainWindow::on_image_List_currentTextChanged(const QString &currentText)
             if(operator==(filename,image.fileName)){
                 ui->canvas->currentImage = image;
                 qDebug() << "image loaded with " << ui->canvas->currentImage.polygonList.size() << " shapes";
-                qDebug() << "current poly has " << ui->canvas->currentImage.currentPolygon.size() << "corners";
+                //qDebug() << "current poly has " << ui->canvas->currentImage.currentPolygon.size() << "corners";
                 break;
             }
         }
@@ -346,4 +346,19 @@ void MainWindow::on_spinBox_Polygon_Sides_valueChanged(int arg1)
 {
     ui->canvas->polyPoints = std::max(arg1,3);
 
+}
+
+void MainWindow::on_rad_Btn_Move_Corner_toggled(bool checked)
+{
+    ui->canvas->shapeIndex = 5;
+}
+
+void MainWindow::on_rad_Btn_Copy_Paste_toggled(bool checked)
+{
+    ui->canvas->shapeIndex = 6;
+}
+
+void MainWindow::on_class_List_currentTextChanged(const QString &currentText)
+{
+    ui->canvas->setCurrentClass(currentText);
 }

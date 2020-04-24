@@ -3,15 +3,17 @@
 
 #include <QObject>
 #include<QLabel>
-
+#include "shape.h"
 class Image
 {
 
 public:
     QImage image;
     QString fileName;
-    QPolygon currentPolygon;
-    QList<QPolygon> polygonList;
+    Shapes currentPolygon;
+    QPolygon dummyPolygon;
+    QList<Shapes> polygonList;
+
     Image();
     Image(QImage imageData,QString filename);
     //Overload Constructer

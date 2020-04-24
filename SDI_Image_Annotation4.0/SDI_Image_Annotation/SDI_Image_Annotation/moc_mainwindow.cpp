@@ -22,10 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[25];
-    char stringdata0[528];
-    QByteArrayData data[27];
-    char stringdata0[560];
+    QByteArrayData data[32];
+    char stringdata0[716];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -58,11 +56,14 @@ QT_MOC_LITERAL(20, 385, 27), // "on_rad_Btn_Triangle_toggled"
 QT_MOC_LITERAL(21, 413, 24), // "on_btn_Add_Class_clicked"
 QT_MOC_LITERAL(22, 438, 27), // "on_btn_Delete_Class_clicked"
 QT_MOC_LITERAL(23, 466, 30), // "on_btn_Save_Annotation_clicked"
-QT_MOC_LITERAL(24, 497, 30) // "on_btn_Load_Annotation_clicked"
-QT_MOC_LITERAL(23, 466, 23), // "on_Rad_Btn_Edit_toggled"
-QT_MOC_LITERAL(24, 490, 26), // "on_rad_Btn_Polygon_toggled"
-QT_MOC_LITERAL(25, 517, 37), // "on_spinBox_Polygon_Sides_valu..."
-QT_MOC_LITERAL(26, 555, 4) // "arg1"
+QT_MOC_LITERAL(24, 497, 30), // "on_btn_Load_Annotation_clicked"
+QT_MOC_LITERAL(25, 528, 23), // "on_Rad_Btn_Edit_toggled"
+QT_MOC_LITERAL(26, 552, 26), // "on_rad_Btn_Polygon_toggled"
+QT_MOC_LITERAL(27, 579, 37), // "on_spinBox_Polygon_Sides_valu..."
+QT_MOC_LITERAL(28, 617, 4), // "arg1"
+QT_MOC_LITERAL(29, 622, 30), // "on_rad_Btn_Move_Corner_toggled"
+QT_MOC_LITERAL(30, 653, 29), // "on_rad_Btn_Copy_Paste_toggled"
+QT_MOC_LITERAL(31, 683, 32) // "on_class_List_currentTextChanged"
 
     },
     "MainWindow\0update_class_list_and_file\0"
@@ -79,11 +80,13 @@ QT_MOC_LITERAL(26, 555, 4) // "arg1"
     "on_btn_Add_Class_clicked\0"
     "on_btn_Delete_Class_clicked\0"
     "on_btn_Save_Annotation_clicked\0"
-    "on_btn_Load_Annotation_clicked"
+    "on_btn_Load_Annotation_clicked\0"
     "on_Rad_Btn_Edit_toggled\0"
     "on_rad_Btn_Polygon_toggled\0"
     "on_spinBox_Polygon_Sides_valueChanged\0"
-    "arg1"
+    "arg1\0on_rad_Btn_Move_Corner_toggled\0"
+    "on_rad_Btn_Copy_Paste_toggled\0"
+    "on_class_List_currentTextChanged"
 };
 #undef QT_MOC_LITERAL
 
@@ -93,8 +96,7 @@ static const uint qt_meta_data_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      16,   14, // methods
-      17,   14, // methods
+      22,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -102,39 +104,28 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   94,    2, 0x08 /* Private */,
-       4,    0,   97,    2, 0x08 /* Private */,
-       5,    0,   98,    2, 0x08 /* Private */,
-       6,    1,   99,    2, 0x08 /* Private */,
-       8,    1,  102,    2, 0x08 /* Private */,
-      10,    1,  105,    2, 0x08 /* Private */,
-      11,    0,  108,    2, 0x08 /* Private */,
-      12,    2,  109,    2, 0x08 /* Private */,
-      15,    1,  114,    2, 0x08 /* Private */,
-      17,    1,  117,    2, 0x08 /* Private */,
-      19,    1,  120,    2, 0x08 /* Private */,
-      20,    1,  123,    2, 0x08 /* Private */,
-      21,    0,  126,    2, 0x08 /* Private */,
-      22,    0,  127,    2, 0x08 /* Private */,
-      23,    0,  128,    2, 0x08 /* Private */,
-      24,    0,  129,    2, 0x08 /* Private */,
-       1,    1,   99,    2, 0x08 /* Private */,
-       4,    0,  102,    2, 0x08 /* Private */,
-       5,    0,  103,    2, 0x08 /* Private */,
-       6,    1,  104,    2, 0x08 /* Private */,
-       8,    1,  107,    2, 0x08 /* Private */,
-      10,    1,  110,    2, 0x08 /* Private */,
-      11,    0,  113,    2, 0x08 /* Private */,
-      12,    2,  114,    2, 0x08 /* Private */,
-      15,    1,  119,    2, 0x08 /* Private */,
-      17,    1,  122,    2, 0x08 /* Private */,
-      19,    1,  125,    2, 0x08 /* Private */,
-      20,    1,  128,    2, 0x08 /* Private */,
-      21,    0,  131,    2, 0x08 /* Private */,
-      22,    0,  132,    2, 0x08 /* Private */,
-      23,    1,  133,    2, 0x08 /* Private */,
-      24,    1,  136,    2, 0x08 /* Private */,
-      25,    1,  139,    2, 0x08 /* Private */,
+       1,    1,  124,    2, 0x08 /* Private */,
+       4,    0,  127,    2, 0x08 /* Private */,
+       5,    0,  128,    2, 0x08 /* Private */,
+       6,    1,  129,    2, 0x08 /* Private */,
+       8,    1,  132,    2, 0x08 /* Private */,
+      10,    1,  135,    2, 0x08 /* Private */,
+      11,    0,  138,    2, 0x08 /* Private */,
+      12,    2,  139,    2, 0x08 /* Private */,
+      15,    1,  144,    2, 0x08 /* Private */,
+      17,    1,  147,    2, 0x08 /* Private */,
+      19,    1,  150,    2, 0x08 /* Private */,
+      20,    1,  153,    2, 0x08 /* Private */,
+      21,    0,  156,    2, 0x08 /* Private */,
+      22,    0,  157,    2, 0x08 /* Private */,
+      23,    0,  158,    2, 0x08 /* Private */,
+      24,    0,  159,    2, 0x08 /* Private */,
+      25,    1,  160,    2, 0x08 /* Private */,
+      26,    1,  163,    2, 0x08 /* Private */,
+      27,    1,  166,    2, 0x08 /* Private */,
+      29,    1,  169,    2, 0x08 /* Private */,
+      30,    1,  172,    2, 0x08 /* Private */,
+      31,    1,  175,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -155,7 +146,10 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::Bool,   18,
     QMetaType::Void, QMetaType::Bool,   18,
-    QMetaType::Void, QMetaType::Int,   26,
+    QMetaType::Void, QMetaType::Int,   28,
+    QMetaType::Void, QMetaType::Bool,   18,
+    QMetaType::Void, QMetaType::Bool,   18,
+    QMetaType::Void, QMetaType::QString,    7,
 
        0        // eod
 };
@@ -183,9 +177,12 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 13: _t->on_btn_Delete_Class_clicked(); break;
         case 14: _t->on_btn_Save_Annotation_clicked(); break;
         case 15: _t->on_btn_Load_Annotation_clicked(); break;
-        case 14: _t->on_Rad_Btn_Edit_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 15: _t->on_rad_Btn_Polygon_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 16: _t->on_spinBox_Polygon_Sides_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 16: _t->on_Rad_Btn_Edit_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 17: _t->on_rad_Btn_Polygon_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 18: _t->on_spinBox_Polygon_Sides_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 19: _t->on_rad_Btn_Move_Corner_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 20: _t->on_rad_Btn_Copy_Paste_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 21: _t->on_class_List_currentTextChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -220,20 +217,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 16)
+        if (_id < 22)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 16;
+        _id -= 22;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 16)
+        if (_id < 22)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 16;
-        if (_id < 17)
-            qt_static_metacall(this, _c, _id, _a);
-        _id -= 17;
-    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 17)
-            *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 17;
+        _id -= 22;
     }
     return _id;
 }

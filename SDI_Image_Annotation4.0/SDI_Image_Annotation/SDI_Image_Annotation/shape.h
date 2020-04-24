@@ -9,11 +9,16 @@
 #include <QtQuick/QQuickItem>
 #include <QVector2D>
 #pragma once
-class Shape {
+class Shapes {
     //Q_OBJECT
 
 public:
     //virtual void drawRect(QPaintEvent *event);
+    QPolygon shape;
+    QString className;
+    Shapes() {};
+    Shapes(QString name,QPolygon poly);
+
 
 private:
     int shapeID;
@@ -21,19 +26,19 @@ private:
     QVector2D vertex1;
 };
 
-class Triangle : Shape {
+class Triangle : Shapes {
 
 };
 
-class Rectangle : Shape {
+class Rectangle : Shapes {
 public:
     Rectangle(QPoint *v1);
 };
 
-class Trapezium : Shape {
+class Trapezium : Shapes {
 
 };
 
-class Polygon : Shape {
+class Polygon : Shapes {
 
 };
