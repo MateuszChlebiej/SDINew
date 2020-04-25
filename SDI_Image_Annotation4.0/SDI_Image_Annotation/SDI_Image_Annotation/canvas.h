@@ -12,8 +12,9 @@ class Canvas: public QLabel{
     Q_OBJECT
 
 public:
-//    Canvas(QLabel *parent = nullptr);
+    //Canvas(QLabel *parent = nullptr);
     Canvas(QWidget *parent = nullptr);
+
     QPixmap pixmap;
     QPoint lastMousePos = QPoint(0,0);
     QPoint currentMousePos = QPoint(0,0);

@@ -15,6 +15,7 @@ class Shapes {
 public:
     //virtual void drawRect(QPaintEvent *event);
     QPolygon shape;
+    QString shapeName;
     QString className;
     Shapes() {};
     Shapes(QString name,QPolygon poly);

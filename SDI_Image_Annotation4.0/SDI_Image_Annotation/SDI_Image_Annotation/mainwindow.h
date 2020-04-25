@@ -7,6 +7,9 @@
 #include <qfile.h>
 #include <qfiledialog.h>
 #include <QTextStream>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
 #include "ui_mainwindow.h"
 #include "annotationclass.h"
 #include "image.h"
@@ -84,30 +87,6 @@ private slots:
         ui->class_List->addItems(classes_list.name_List);
 
     }
-    /*!
-     * \brief on_btn_Select_Class_File_clicked
-     * Trigger for click on button responsible for triggering QFileDialogue, opening a file browse window and selecting a .names file.
-     */
-    void on_btn_Select_Class_File_clicked();
-    /*!
-     * \brief on_btn_Select_Image_Folder_clicked
-     * Trigger for click on button responsible for triggering QFileDialogue, opening a file browse window and selecting a directory contaiting images.
-     */
-    void on_btn_Select_Image_Folder_clicked();
-
-    /*!
-     * \brief on_image_List_currentTextChanged
-     * Check for selected item within image_List, triggers corresponding image to load into the canvas.
-     * \param currentText currently selected item within list.
-     */
-    void on_image_List_currentTextChanged(const QString &currentText);
-
-    void on_dropdown_Sort_Image_activated(int index);
-
-    void on_dropdown_Sort_Class_activated(int index);
-
-    void on_canvas_pressed();
-
 
     QStringList sortingName(QStringList item_list, QString ascending_or_descending){
 
@@ -212,6 +191,150 @@ private slots:
         //Change gui label showing path of current directory.
         ui->folder_Path_Image->setText(folder_name);
     }
+
+    void saveAnnotationFile(){
+
+        //get size of imageslist
+        //go through images list, each image at a time, for each image
+            //get image name
+            //go through imagepolygonList
+                //get shape type
+                //get amount of coordinates
+                //get coordinates
+
+        /*int list_size = canvas.imageList.size();
+        QJsonObject recordObject;
+        recordObject.insert("Number of annotated images", QJsonValue::fromVariant(list_size));
+        for(int i = 0; i<list_size; i++){
+            QString image_name = canvas.imageList[i].fileName;
+            int shape_list_size = canvas.imageList[i].polygonList.size();
+            QJsonObject imageObject;
+            imageObject.insert("Image Name", image_name);
+            imageObject.insert("Number of shapes", shape_list_size);
+            for(int j = 0; j<shape_list_size; j++){
+                QString shape_type = canvas.imageList[i].polygonList[j].shapeName;
+                int shape_points_size = canvas,imageList[i].polygonList[j].pointsList.size(); ////////To be filled out as i dont know where coordniated are stored.
+                QJsonArray shapeVectorsArray;
+                shapeVectorsArray.push_back(shape_type);
+                shapeVectorsArray.push_back(amount of shape points);  //needs to be filled out
+                for(int k = 0; k<shape_points_size; k++){
+                    shapeVectorsArray.push_back("Shape Coordinate!!!!!");
+
+                }
+               imageObject.insert("Shape", shapeVectorsArray);
+            }
+        }
+
+
+
+
+        QString json_filter = "JSON (*.json)";
+        QString file = QFileDialog::getSaveFileName(this,tr("Save File"),"/",json_filter);
+
+        if(file.isEmpty()){
+
+        }
+        else{
+
+            QJsonDocument doc(recordObject);
+            qDebug() << doc.toJson();
+
+
+            QByteArray data_json = doc.toJson();
+            QFile output(file);
+            if(output.open(QIODevice::WriteOnly | QIODevice::Text)){
+                output.write(data_json);
+                output.close();
+                QMessageBox::information(this,tr("Message"),tr("Document saved"));
+            }
+            else{
+                QMessageBox::critical(this,tr("Error"),output.errorString());
+            }
+        }*/
+    }
+
+    void readAnnotationFile(){
+       /* QString json_filter = "JSON (*.json)";
+        QString file = QFileDialog::getOpenFileName(this,tr("Open File"),"/",json_filter);
+
+        if(file.isEmpty()){
+        }
+        else{
+
+            //Go through file, for each image
+                //Store image in annotated image list
+                //Go through each image shape
+                    //add to shapesList
+                    //add each point to shape points list
+
+
+            QJsonDocument doc;
+            QJsonObject obj;
+            QByteArray data_json;
+            QFile input(file);
+            if(input.open(QIODevice::ReadOnly | QIODevice::Text)){
+                data_json = input.readAll();
+                doc = doc.fromJson(data_json);
+                obj = doc.object();
+
+                QString value1 = obj["Value1"].toString();
+                qDebug()<<value1;
+                QString value2 = obj["Value2"].toString();
+                 qDebug()<<value2;
+                QString value3 = obj["Value3"].toString();
+                 qDebug()<<value3;
+                QString value4 = obj["Value4"].toString();
+                 qDebug()<<value4;
+
+                 int number_of_images = obj["Number of annotated images"].toInt();
+                 for(int i = 0; i<number_of_images; i++){
+                     //add to annotated image list
+                      int number_of_shapes = obj["Number shapes"].toInt();
+                     for(int j = 0; j< number_of_shapes; j++){
+                         //add shape To Image shape list
+                         //set shape type
+                         //get number of points
+                         for(int k = 0; k< numberOfShapePoints; k++){
+                             //add point to list
+                         }
+                     }
+                 }
+
+                QMessageBox::information(this,tr("Message"),tr("Document Open"));
+            }
+            else{
+                 QMessageBox::critical(this,tr("Error"),input.errorString());
+            }
+        }*/
+    }
+
+
+
+
+
+
+    /*!
+     * \brief on_btn_Select_Class_File_clicked
+     * Trigger for click on button responsible for triggering QFileDialogue, opening a file browse window and selecting a .names file.
+     */
+    void on_btn_Select_Class_File_clicked();
+    /*!
+     * \brief on_btn_Select_Image_Folder_clicked
+     * Trigger for click on button responsible for triggering QFileDialogue, opening a file browse window and selecting a directory contaiting images.
+     */
+    void on_btn_Select_Image_Folder_clicked();
+    /*!
+     * \brief on_image_List_currentTextChanged
+     * Check for selected item within image_List, triggers corresponding image to load into the canvas.
+     * \param currentText currently selected item within list.
+     */
+    void on_image_List_currentTextChanged(const QString &currentText);
+
+    void on_dropdown_Sort_Image_activated(int index);
+
+    void on_dropdown_Sort_Class_activated(int index);
+
+    void on_canvas_pressed();
 
     void on_rad_Btn_Rectangle_toggled(bool checked);
 

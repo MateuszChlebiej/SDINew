@@ -13,6 +13,7 @@
 #include <QJsonObject>
 #include <thread>
 #include <chrono>
+#include <QJsonArray>
 #include "image.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -66,18 +67,19 @@ void MainWindow::on_image_List_currentTextChanged(const QString &currentText)
             ui->canvas->imageList.replace(i,ui->canvas->currentImage);
         }
     }
+
+
     if(currentText == ""){
-        qDebug() << "NoItem";
+        //qDebug() << "NoItem";
     }
     else{
-        qDebug()<< "ImageList" << currentText;
 
-        //Find the image path by looking at Vector with image name and full path.
-        int file_path_index = image_data.indexOf(currentText)-1;
-        QString filename = image_data[file_path_index];
+        QString filepath = images_list.FindNodeGivePath(currentText);
+        qDebug()<<filepath;
+
 
         for(Image image: ui->canvas->imageList){
-            if(operator==(filename,image.fileName)){
+            if(operator==(filepath,image.filePath)){
                 ui->canvas->currentImage = image;
                 qDebug() << "image loaded with " << ui->canvas->currentImage.polygonList.size() << " shapes";
                 //qDebug() << "current poly has " << ui->canvas->currentImage.currentPolygon.size() << "corners";
@@ -85,12 +87,17 @@ void MainWindow::on_image_List_currentTextChanged(const QString &currentText)
             }
         }
 
+        ui->canvas->currentImage.fileName = currentText;
+        QImage LoadedImg(filepath);
+        ui->canvas->currentImage.image = LoadedImg;
+
         //Send corresponding image to canvas.
-        //QImage image(filename);
-        ui->canvas->setPixmap(QPixmap::fromImage(ui->canvas->currentImage.image));
-        qDebug() << "folder has  " << ui->canvas->imageList.size() << " images";
+
+        ui->canvas->setPixmap(QPixmap::fromImage(canvas.currentImage.image));
         //set canvas image to current image
-    //ui->canvas->image = image;
+
+
+        qDebug()<<ui->canvas->imageList.size();
     }
 }
 
@@ -178,7 +185,8 @@ void MainWindow::on_rad_Btn_Rectangle_toggled(bool checked)
 {
     //shapeIndex = 0;
     ui->canvas->shapeIndex=0;
-    qDebug() << "checked";
+
+
 }
 
 void MainWindow::on_rad_Btn_Trapezium_toggled(bool checked)
@@ -216,73 +224,12 @@ void MainWindow::on_btn_Delete_Class_clicked()
 
 void MainWindow::on_btn_Save_Annotation_clicked()
 {
-    QString json_filter = "JSON (*.json)";
-    QString file = QFileDialog::getSaveFileName(this,tr("Save File"),"/",json_filter);
-
-    if(file.isEmpty()){
-
-    }
-    else{
-        QString value1 = "Tom";
-        QString value2 = "Jim";
-        QString value3 = "Mat";
-        QString value4 = "Bob";
-
-        QJsonDocument doc;
-        QJsonObject obj;
-        obj["Value1"] = value1;
-        obj["Value2"] = value2;
-        obj["Value3"] = value3;
-        obj["Value4"] = value4;
-
-        doc.setObject(obj);
-        QByteArray data_json = doc.toJson();
-        QFile output(file);
-        if(output.open(QIODevice::WriteOnly | QIODevice::Text)){
-            output.write(data_json);
-            output.close();
-            QMessageBox::information(this,tr("Message"),tr("Document saved"));
-        }
-        else{
-            QMessageBox::critical(this,tr("Error"),output.errorString());
-        }
-
-    }
-
+   saveAnnotationFile();
 }
 
 void MainWindow::on_btn_Load_Annotation_clicked()
 {
-    QString json_filter = "JSON (*.json)";
-    QString file = QFileDialog::getOpenFileName(this,tr("Open File"),"/",json_filter);
-
-    if(file.isEmpty()){
-    }
-    else{
-        QJsonDocument doc;
-        QJsonObject obj;
-        QByteArray data_json;
-        QFile input(file);
-        if(input.open(QIODevice::ReadOnly | QIODevice::Text)){
-            data_json = input.readAll();
-            doc = doc.fromJson(data_json);
-            obj = doc.object();
-
-            QString value1 = obj["Value1"].toString();
-            qDebug()<<value1;
-            QString value2 = obj["Value2"].toString();
-             qDebug()<<value2;
-            QString value3 = obj["Value3"].toString();
-             qDebug()<<value3;
-            QString value4 = obj["Value4"].toString();
-             qDebug()<<value4;
-
-            QMessageBox::information(this,tr("Message"),tr("Document Open"));
-        }
-        else{
-             QMessageBox::critical(this,tr("Error"),input.errorString());
-        }
-    }
+   readAnnotationFile();
 }
 
 void MainWindow::on_Rad_Btn_Edit_toggled(bool checked)

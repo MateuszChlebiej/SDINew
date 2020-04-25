@@ -10,6 +10,7 @@ class Image
 public:
     QImage image;
     QString fileName;
+    QString filePath;
     Shapes currentPolygon;
     QPolygon dummyPolygon;
     QList<Shapes> polygonList;
