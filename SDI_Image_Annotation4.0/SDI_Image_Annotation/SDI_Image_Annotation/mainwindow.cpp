@@ -8,6 +8,15 @@
 #include <qdebug.h>
 #include <QVector2D>
 #include <QCursor>
+<<<<<<< Updated upstream
+=======
+#include <QJsonDocument>
+#include <QMessageBox>
+#include <QJsonObject>
+#include <thread>
+#include <chrono>
+#include <QJsonArray>
+>>>>>>> Stashed changes
 #include <algorithm>
 #include "image.h"
 #include "mainwindow.h"
@@ -29,6 +38,11 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
 
+<<<<<<< Updated upstream
+=======
+    autoSave.terminate();
+    //autoSave.wait();
+>>>>>>> Stashed changes
     delete ui;
 
 }
@@ -187,6 +201,11 @@ void MainWindow::on_rad_Btn_Polygon_clicked(bool checked)
 void MainWindow::on_spinBox_Polygon_Sides_valueChanged(int arg1)
 {
     ui->canvas->polyPoints = std::max(arg1,3);
+<<<<<<< Updated upstream
+=======
+    ui->canvas->polyPoints = std::min(arg1,9);
+
+>>>>>>> Stashed changes
 }
 
 void MainWindow::makeAnnotationFile(){

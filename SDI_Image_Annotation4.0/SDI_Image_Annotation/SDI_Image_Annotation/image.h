@@ -7,8 +7,49 @@ class Image : public QObject
 {
     Q_OBJECT
 public:
+<<<<<<< Updated upstream
 
     explicit Image(QObject *parent = nullptr);
+=======
+    /*!
+     * \brief image
+     *image data
+     */
+    QImage image;
+    /*!
+     * \brief file name
+     *name of file
+     */
+    QString fileName;
+    /*!
+     * \brief file path
+     *full path of file
+     */
+    QString filePath;
+    /*!
+     * \brief current polygon
+     * polygon that is currently being drawn or manipulated
+     */
+    Shapes currentPolygon;
+    /*!
+     * \brief  dummy polygon
+     *polygon that is a copy of a polygon, used as a reference for moving
+     */
+    QPolygon dummyPolygon;
+    /*!
+     * \brief polygon list
+     *list of shapes associated with image
+     */
+    QList<Shapes> polygonList;
+
+    Image();
+    /*!
+     * \brief Image constructor
+     *overloaded image constructor to initialise with parameters
+     * \param image, file name
+     */
+    Image(QImage imageData,QString filename);
+>>>>>>> Stashed changes
     //Overload Constructer
 
     /*!

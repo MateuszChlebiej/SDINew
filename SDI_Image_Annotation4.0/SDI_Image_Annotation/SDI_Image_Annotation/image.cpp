@@ -2,10 +2,17 @@
 
 Image::Image(QObject *parent) : QObject(parent)
 {
+<<<<<<< Updated upstream
 
+=======
+    //set parameters
+    image = imageData;
+    fileName = filename;
+    filePath = filename;
+>>>>>>> Stashed changes
 }
 
-
+//set and get functions
 void Image::set_image_name(QString name){
 
     this->image_name = name;
