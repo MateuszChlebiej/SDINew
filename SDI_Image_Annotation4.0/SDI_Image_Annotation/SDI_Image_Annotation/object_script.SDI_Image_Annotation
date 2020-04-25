@@ -1,5 +1,6 @@
 addclasswindow.o
 annotationclass.o
+autoSaveThread.o
 canvas.o
 image.o
 list.o
@@ -8,5 +9,6 @@ mainwindow.o
 shape.o
 moc_addclasswindow.o
 moc_annotationclass.o
+moc_autoSaveThread.o
 moc_canvas.o
 moc_mainwindow.o

@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     addclasswindow.cpp \
     annotationclass.cpp \
+    autoSaveThread.cpp \
     canvas.cpp \
     image.cpp \
     list.cpp \
@@ -28,6 +29,7 @@ SOURCES += \
 HEADERS += \
     addclasswindow.h \
     annotationclass.h \
+    autoSaveThread.h \
     canvas.h \
     image.h \
     list.h \

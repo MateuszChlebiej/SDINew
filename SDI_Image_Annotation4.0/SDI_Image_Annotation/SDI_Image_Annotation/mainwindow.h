@@ -14,8 +14,8 @@
 #include "addclasswindow.h"
 #include "class.h"
 #include "list.h"
-
-
+#include"autoSaveThread.h"
+#pragma once
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -268,6 +268,8 @@ private:
      */
     List classes_list;
 
+
+    AutoSaveThread autoSave;
 
 };
 #endif // MAINWINDOW_H

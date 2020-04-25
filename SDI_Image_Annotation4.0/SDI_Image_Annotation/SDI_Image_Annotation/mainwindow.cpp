@@ -11,6 +11,8 @@
 #include <QJsonDocument>
 #include <QMessageBox>
 #include <QJsonObject>
+#include <thread>
+#include <chrono>
 #include "image.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -18,18 +20,23 @@
 #include "canvas.h"
 #include "addclasswindow.h"
 #include "list.h"
+#include"autoSaveThread.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    //std::thread t1(autoSave);
 
+    autoSave.start();
 }
 
 MainWindow::~MainWindow()
 {
-
+    autoSave.active = false;
+    autoSave.terminate();
+    //autoSave.wait();
     delete ui;
 
 }
@@ -182,6 +189,8 @@ void MainWindow::on_rad_Btn_Trapezium_toggled(bool checked)
 void MainWindow::on_rad_Btn_Triangle_toggled(bool checked)
 {
     ui->canvas->shapeIndex = 2;
+
+
 }
 
 void MainWindow::on_btn_Add_Class_clicked()
@@ -306,3 +315,12 @@ void MainWindow::on_class_List_currentTextChanged(const QString &currentText)
 {
     ui->canvas->setCurrentClass(currentText);
 }
+
+//void MainWindow::autoSave(){
+//    while (true) {
+//        std::this_thread::sleep_for(std::chrono::seconds(10));
+//        // save annotations file
+
+//        qDebug() << "autosaved";
+//      }
+//}
