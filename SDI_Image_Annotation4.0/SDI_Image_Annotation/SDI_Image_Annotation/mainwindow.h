@@ -181,8 +181,9 @@ private slots:
                 ui->image_List->addItem(var.baseName());
                 //Add to list with image names used for sorting.
 
-
+                QImage image = QImage(var.filePath());
                 images_list.InsertNodeImage(lineNum,var.baseName(),var.filePath(),lastMod);
+                ui->canvas->imageList.append(Image(image,var.filePath()));
                 lineNum++;
             }
 

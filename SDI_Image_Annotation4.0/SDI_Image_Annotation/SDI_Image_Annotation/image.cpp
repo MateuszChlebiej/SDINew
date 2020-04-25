@@ -4,7 +4,7 @@ Image::Image(QImage imageData, QString filename)
 {
     image = imageData;
     fileName = filename;
-
+    filePath = filename;
 }
 Image::Image(){}
 

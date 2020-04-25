@@ -9,7 +9,7 @@ Canvas::Canvas(QWidget *parent)
     : QLabel(parent)
 {
     setAttribute(Qt::WA_StaticContents);
-
+    setMouseTracking(true);
     QPolygon test;
     //currentImage = Image();
 //    test.setPoints(2,100,100,300,300);
@@ -117,7 +117,7 @@ void Canvas::mousePressEvent(QMouseEvent *ev){
 
 void Canvas::mouseMoveEvent(QMouseEvent *ev){
     currentMousePos = ev->pos();
-
+    hovering = false;
     if(moving && shapeIndex == 4){
 
         //currentImage.currentPolygon.translate(lastMousePos.x()-currentMousePos.x(),lastMousePos.y()-currentMousePos.y());
@@ -131,12 +131,13 @@ void Canvas::mouseMoveEvent(QMouseEvent *ev){
         currentImage.currentPolygon.shape[pointMoveIndex] = currentMousePos;
         qDebug() << "moving Point";
     }
-    else if(!moving && !drawing){
+    if(!moving && !drawing){
+
         for(int i = 0; i < currentImage.polygonList.size(); i++){
             QRect bounds = currentImage.polygonList[i].shape.boundingRect();
             if(bounds.contains(lastMousePos)){
                 currentImage.currentPolygon = currentImage.polygonList[i];
-
+                hovering = true;
             }
 
         }
@@ -237,8 +238,9 @@ void Canvas::paintEvent(QPaintEvent *ev){
     }
 
         //display class name
+    if(hovering){
         painter.drawText(currentMousePos,currentImage.currentPolygon.className);
-
+    }
 
     painter.end();
 }

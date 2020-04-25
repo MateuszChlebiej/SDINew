@@ -15,10 +15,10 @@ void AutoSaveThread::run(){
 
 //        timer.start(1000);
 //        }
-      while(true){
-          std::this_thread::sleep_for(std::chrono::seconds(saveTimer));
-           qDebug() << "autosaved";
-      }
+    while(true){
+        std::this_thread::sleep_for(std::chrono::seconds(saveTimer));
+         qDebug() << "autosaved";
+    }
 //    if(!active){
 //        this->quit();
 //        this->wait();

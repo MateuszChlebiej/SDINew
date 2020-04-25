@@ -12,7 +12,7 @@ class Canvas: public QLabel{
     Q_OBJECT
 
 public:
-    //Canvas(QLabel *parent = nullptr);
+
     Canvas(QWidget *parent = nullptr);
 
     QPixmap pixmap;
@@ -25,6 +25,7 @@ public:
     int trapDist;
     bool drawing = false;
     bool moving = false;
+    bool hovering = true;
     int pointIndex = 0;
     int polyPoints = 3;
     const int pointSelectionTolerance = 10;
@@ -43,6 +44,7 @@ protected:
 
     void mousePressEvent(QMouseEvent *ev) override;
     void mouseMoveEvent(QMouseEvent *ev) override;
+    //void mouseMove(QMouseEvent *ev);
     void mouseReleaseEvent(QMouseEvent *ev) override;
     void paintEvent(QPaintEvent *ev) override;
     void paintPolygon(QPolygon polygon);

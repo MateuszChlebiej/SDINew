@@ -63,7 +63,7 @@ void MainWindow::on_image_List_currentTextChanged(const QString &currentText)
 //        }
 //    }
     for(int i = 0 ; i < ui->canvas->imageList.size();i++){
-        if(operator==(ui->canvas->currentImage.fileName,ui->canvas->imageList[i].fileName)){
+        if(operator==(ui->canvas->currentImage.filePath,ui->canvas->imageList[i].filePath)){
             ui->canvas->imageList.replace(i,ui->canvas->currentImage);
         }
     }
@@ -76,10 +76,12 @@ void MainWindow::on_image_List_currentTextChanged(const QString &currentText)
 
         QString filepath = images_list.FindNodeGivePath(currentText);
         qDebug()<<filepath;
+        qDebug()<<ui->canvas->imageList.size();
 
 
         for(Image image: ui->canvas->imageList){
             if(operator==(filepath,image.filePath)){
+
                 ui->canvas->currentImage = image;
                 qDebug() << "image loaded with " << ui->canvas->currentImage.polygonList.size() << " shapes";
                 //qDebug() << "current poly has " << ui->canvas->currentImage.currentPolygon.size() << "corners";
