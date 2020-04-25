@@ -39,6 +39,10 @@ public:
     QString classFilePath;
 
     Canvas canvas;
+    /*!
+         * \brief shape index
+         * shape index that is sent to canvas
+         */
     static int shapeIndex;
 
 private slots:
@@ -392,7 +396,10 @@ private:
      */
     List classes_list;
 
-
+    /*!
+         * \brief auto save thread
+         *object which contains the auto save thread.
+         */
     AutoSaveThread autoSave;
 
 };

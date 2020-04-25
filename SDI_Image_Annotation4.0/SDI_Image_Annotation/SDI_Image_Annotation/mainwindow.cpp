@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    autoSave.active = false;
+
     autoSave.terminate();
     //autoSave.wait();
     delete ui;
@@ -247,6 +247,7 @@ void MainWindow::on_rad_Btn_Polygon_toggled(bool checked)
 void MainWindow::on_spinBox_Polygon_Sides_valueChanged(int arg1)
 {
     ui->canvas->polyPoints = std::max(arg1,3);
+    ui->canvas->polyPoints = std::min(arg1,9);
 
 }
 
@@ -264,12 +265,3 @@ void MainWindow::on_class_List_currentTextChanged(const QString &currentText)
 {
     ui->canvas->setCurrentClass(currentText);
 }
-
-//void MainWindow::autoSave(){
-//    while (true) {
-//        std::this_thread::sleep_for(std::chrono::seconds(10));
-//        // save annotations file
-
-//        qDebug() << "autosaved";
-//      }
-//}

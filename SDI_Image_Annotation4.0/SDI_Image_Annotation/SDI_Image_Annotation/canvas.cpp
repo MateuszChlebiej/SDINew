@@ -30,7 +30,7 @@ void Canvas::mousePressEvent(QMouseEvent *ev){
             pointList[0] = currentMousePos.x();
             pointList[1] = currentMousePos.y();
             qDebug() << "placed first point";
-            pointIndex++;
+            pointIndex+=2;
             drawing = true;
 
         }
@@ -41,8 +41,8 @@ void Canvas::mousePressEvent(QMouseEvent *ev){
             qDebug() << "placed point at index" << pointIndex;
             //            currentPolygon.setPoint(0,100,200);
             //            currentPolygon.setPoint(1,currentMousePos);
-            pointIndex++;
-            if(pointIndex == polyPoints + 1){
+            pointIndex+=2;
+            if(pointIndex >= polyPoints*2){
                 currentImage.currentPolygon.shape.putPoints(0,polyPoints,pointList);
                 drawing = false;
                 currentImage.polygonList.append(currentImage.currentPolygon);
@@ -51,98 +51,100 @@ void Canvas::mousePressEvent(QMouseEvent *ev){
         }
 
         else if(shapeIndex == 4 && !drawing){
-            for(int i = 0; i < currentImage.polygonList.size(); i++){
-                QRect bounds = currentImage.polygonList[i].shape.boundingRect();
-                if(bounds.contains(lastMousePos)){
-                    //delete shape if right click
+                   for(int i = 0; i < currentImage.polygonList.size(); i++){
+                       QRect bounds = currentImage.polygonList[i].shape.boundingRect();
+                       if(bounds.contains(lastMousePos)){
+                           currentImage.dummyPolygon = currentImage.polygonList[i].shape;
+                           moveIndex = i;
+                           moving = true;
 
 
-                    currentImage.dummyPolygon = currentImage.polygonList[i].shape;
-                    moveIndex = i;
-                    moving = true;
+                       }
+                   }
+               }
+               else if (shapeIndex == 5 && !drawing){
+                   //for each shape, if within Xpx of a point then select point
+                   for(int j = 0; j < currentImage.polygonList.size(); j++){
+                       for(int k = 0; k <= currentImage.polygonList[j].shape.size(); k++){
+                           QRect toleranceRect = QRect(currentImage.polygonList[j].shape[k].x() - pointSelectionTolerance/2,currentImage.polygonList[j].shape[k].y() - pointSelectionTolerance/2,pointSelectionTolerance,pointSelectionTolerance);
+                           if(toleranceRect.contains(lastMousePos)){
+                               //start moving point
+                               currentImage.currentPolygon = currentImage.polygonList[j];
+                               moveIndex = j;
+                               pointMoveIndex = k;
+                               moving = true;
+       }
+                       }
+                   }
+               }
+               //if copy shape
+               else if (shapeIndex == 6 && !drawing){
+                   for (int l = 0; l < currentImage.polygonList.size(); l++) {
+                       QRect bounds = currentImage.polygonList[l].shape.boundingRect();
+                       if(bounds.contains(lastMousePos)){
+                           clipboardPolygon = currentImage.polygonList[l].shape;
 
-
-                }
-            }
-        }
-        else if (shapeIndex == 5 && !drawing){
-            //for each shape, if within 10px of a point then select point
-            for(int j = 0; j < currentImage.polygonList.size(); j++){
-                for(int k = 0; k <= currentImage.polygonList[j].shape.size(); k++){
-                    QRect toleranceRect = QRect(currentImage.polygonList[j].shape[k].x() - pointSelectionTolerance/2,currentImage.polygonList[j].shape[k].y() - pointSelectionTolerance/2,pointSelectionTolerance,pointSelectionTolerance);
-                    if(toleranceRect.contains(lastMousePos)){
-                        //dummyPoint = currentImage.polygonList[j][k];
-                        currentImage.currentPolygon = currentImage.polygonList[j];
-                        moveIndex = j;
-                        pointMoveIndex = k;
-                        moving = true;
-                        //qDebug() << "selected shape " << currentImage.polygonList.indexOf(currentImage.polygonList[j]) << " at point " << currentImage.polygonList[j].shape.indexOf(currentImage.polygonList[j].shape[k]) ;
-                    }
-                }
-            }
-        }
-        else if (shapeIndex == 6 && !drawing){
-            for (int l = 0; l < currentImage.polygonList.size(); l++) {
-                QRect bounds = currentImage.polygonList[l].shape.boundingRect();
-                if(bounds.contains(lastMousePos)){
-                    clipboardPolygon = currentImage.polygonList[l].shape;
-
-                }
-            }
-        }
-        //update();
+                       }
+                   }
+               }
+               // start drawing if normal shape selected
         if(shapeIndex >= 0 && shapeIndex <= 2){
             drawing = true;
         }
         update();
     }
+    //delete polygon
     if (ev->button() == Qt::RightButton && shapeIndex == 4){
-        for(int i = 0; i < currentImage.polygonList.size(); i++){
-            QRect bounds = currentImage.polygonList[i].shape.boundingRect();
-            if(bounds.contains(lastMousePos)){
-                currentImage.polygonList.removeAt(i);
-                qDebug() << "deletingpolygon" ;
-            }
+           for(int i = 0; i < currentImage.polygonList.size(); i++){
+               QRect bounds = currentImage.polygonList[i].shape.boundingRect();
+               if(bounds.contains(lastMousePos)){
+                   currentImage.polygonList.removeAt(i);
+                   qDebug() << "deletingpolygon" ;
+               }
 
-        }
+           }
 
 
-    }
-    else if (ev->button() == Qt::RightButton && shapeIndex == 6){
-        Shapes pastedPoly;
-        pastedPoly.shape = clipboardPolygon.translated(lastMousePos - clipboardPolygon[0]);
-        currentImage.polygonList.append((pastedPoly));
-    }
-}
+       }
+       //paste polygon
+       else if (ev->button() == Qt::RightButton && shapeIndex == 6){
+           Shapes pastedPoly;
+           pastedPoly.shape = clipboardPolygon.translated(lastMousePos - clipboardPolygon[0]);
+           currentImage.polygonList.append((pastedPoly));
+       }
+   }
+
 
 void Canvas::mouseMoveEvent(QMouseEvent *ev){
     currentMousePos = ev->pos();
-    hovering = false;
+    //move polygon with cursor movements
     if(moving && shapeIndex == 4){
 
-        //currentImage.currentPolygon.translate(lastMousePos.x()-currentMousePos.x(),lastMousePos.y()-currentMousePos.y());
-        //currentImage.currentPolygon.translate(5,0);
+
         currentImage.currentPolygon.shape = currentImage.dummyPolygon.translated(currentMousePos-lastMousePos);
         currentImage.polygonList[moveIndex] = currentImage.currentPolygon;
         qDebug() << "currently moving polygon" ;
     }
+    //move point to match cursor location
     else if(moving && shapeIndex == 5){
 
         currentImage.currentPolygon.shape[pointMoveIndex] = currentMousePos;
         qDebug() << "moving Point";
     }
+    //if not moving or drawing, see if hoving over shape
     if(!moving && !drawing){
 
         for(int i = 0; i < currentImage.polygonList.size(); i++){
             QRect bounds = currentImage.polygonList[i].shape.boundingRect();
-            if(bounds.contains(lastMousePos)){
+            if(bounds.contains(currentMousePos)){
                 currentImage.currentPolygon = currentImage.polygonList[i];
                 hovering = true;
+                break;
             }
+            hovering= false;
 
         }
     }
-
     update();
 }
 
@@ -166,10 +168,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent *ev){
 }
 
 
-void Canvas::paintPolygon(QPolygon polygon){
-    QPainter painter;
-    painter.drawPolygon(polygon);
-}
+
 
 void Canvas::paintEvent(QPaintEvent *ev){
     QPainter painter;
@@ -194,7 +193,7 @@ void Canvas::paintEvent(QPaintEvent *ev){
     if(shapeIndex == 0){
 
         currentImage.currentPolygon.shape.setPoints(4,lastMousePos.x(),lastMousePos.y(),currentMousePos.x(),lastMousePos.y(),currentMousePos.x(),currentMousePos.y(),lastMousePos.x(),currentMousePos.y());
-       // painter.drawPolygon(currentImage.currentPolygon);
+
 
     }
 
@@ -217,22 +216,7 @@ void Canvas::paintEvent(QPaintEvent *ev){
         //painter.drawPolygon(currentImage.currentPolygon);
     }
 
-//    else if(shapeIndex == 3){
-//        int initalisedPoints = 0;
-//        for(int i = 0; i < polyPoints ; i++){
-//            //if(!pointList[i].isNull()){initalisedPoints++;}
 
-//        }
-//        for(int j = 0; j< initalisedPoints ; j++){
-
-
-//        }
-////        currentPolygon.setPoint(0,200,200);
-////        currentPolygon.setPoint(1,300,300);
-////        currentPolygon.setPoint(0,400,200);
-////        currentPolygon.setPoints(3,200,200,300,300,400,200);
-//        painter.drawPolygon(currentImage.currentPolygon);
-//    }
     if(drawing || moving){
         painter.drawPolygon(currentImage.currentPolygon.shape);
     }
@@ -246,5 +230,6 @@ void Canvas::paintEvent(QPaintEvent *ev){
 }
 
 void Canvas::setCurrentClass(QString name){
+        //replace current class with arugment
     currentClass = name;
 }

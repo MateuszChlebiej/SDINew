@@ -7,9 +7,18 @@
 class AutoSaveThread : public QThread {
     Q_OBJECT
 public:
-    bool active;
+
 protected:
+    /*!
+     * \brief run
+     * called when thread starts, defines functioning of auto save thread
+     * \param
+     */
     void run();
 private:
+    /*!
+     * \brief save timer
+     *time between autosaves
+     */
     int saveTimer = 10;
 };
