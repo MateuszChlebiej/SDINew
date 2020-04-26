@@ -7,6 +7,14 @@ class AutoSaveThread : public QThread {
     Q_OBJECT
 public:
 
+
+signals:
+    /*!
+     * \brief trigger autosave
+     * signal emitted to trigegr autosave in main window
+     *
+     */
+    void triggerAutosave();
 protected:
     /*!
      * \brief run
@@ -19,5 +27,5 @@ private:
      * \brief save timer
      *time between autosaves
      */
-    int saveTimer = 10;
+    int saveTimer = 60;
 };

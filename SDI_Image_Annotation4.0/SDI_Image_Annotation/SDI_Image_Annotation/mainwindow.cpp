@@ -30,13 +30,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     //std::thread t1(autoSave);
 
-    autoSave.start();
+    //autoSave.start();
 }
 
 MainWindow::~MainWindow()
 {
 
-    autoSave.terminate();
+    //autoSave.terminate();
     //autoSave.wait();
     delete ui;
 

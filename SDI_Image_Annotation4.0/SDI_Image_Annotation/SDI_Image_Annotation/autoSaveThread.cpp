@@ -9,7 +9,9 @@ void AutoSaveThread::run(){
     while(true){
         //sleep for X amount of time then autosave
         std::this_thread::sleep_for(std::chrono::seconds(saveTimer));
-        //MainWindow::saveAnnotationFile("AutoSave");
+
+        qDebug() << "autosave signal emitted";
+        emit triggerAutosave();
     }
 
 }

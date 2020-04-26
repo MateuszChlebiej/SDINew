@@ -162,6 +162,16 @@ public:
 
     return imagesJsonArray;
 }
+public slots:
+    /*!
+     * \brief Begin autosave
+     * slot that triggers autosave function when appropriate signal is emitted from the autosave thread
+     *
+     */
+    void beginAutoSave() {
+        qDebug() << "autosave signal recieved...";
+        saveAnnotationFile("AutoSave");
+    }
 
 private slots:
 
