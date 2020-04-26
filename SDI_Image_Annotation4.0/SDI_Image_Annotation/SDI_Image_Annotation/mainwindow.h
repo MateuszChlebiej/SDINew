@@ -30,23 +30,43 @@ public:
     MainWindow(QWidget *parent = nullptr);
 
     ~MainWindow();
-
+    /*!
+     * \brief addclasswindow
+     * Pointer to new window used for adding new class to class file.
+     */
     AddClassWindow* addclasswindow;
 
+    /*!
+     * \brief classFile
+     * Variable storing the path to the classFile.
+     */
     QString classFile;
 
     Canvas canvas;
 
+    /*!
+     * \brief annotationFileLoaded
+     * Boolean value to check if an annotation file is loaded.
+     */
     bool annotationFileLoaded;
 
+    /*!
+     * \brief annotationFileLoadedPath
+     * Path of loaded annotation file.
+     */
     QString annotationFileLoadedPath;
 
     /*!
-         * \brief shape index
-         * shape index that is sent to canvas
-         */
+    * \brief shape index
+    * shape index that is sent to canvas
+    */
     static int shapeIndex;
-
+    /*!
+     * \brief saveAnnotationFile
+     * One of two functions responsible for structuring and saving the annotation file in the json format.
+     * \param mode
+     * Paramater used to differentiate between function being called by autosave or manual save.
+     */
     void saveAnnotationFile(QString mode){
 
         QString file;
@@ -57,7 +77,7 @@ public:
 
         for(int i = 0; i < ui->canvas->imageList.size(); i++){
 
-            documentArray.append(dataSaveHelp(i));
+            documentArray.append(saveAnnotationData(i));
 
         }
         document.insert("Amount of images",ui->canvas->imageList.size());
@@ -95,8 +115,16 @@ public:
         }
     }
 }
-
-    QJsonArray dataSaveHelp(int imageIndex){
+    /*!
+     * \brief saveAnnotationData
+     * 2/2 Of functions responsible for structuring and saving the annotation file in json format.
+     * This Function
+     * \param imageIndex
+     * Image index used to pull in data from convas->imagesList
+     * \return
+     * Returns QJsonArray used in the first function to add data to Json file.
+     */
+    QJsonArray saveAnnotationData(int imageIndex){
 
     QJsonArray imagesJsonArray;
     QJsonObject imageHoldObject;
@@ -137,6 +165,12 @@ public:
 
 private slots:
 
+    /*!
+     * \brief update_class_list_and_file_add
+     * Function used to add a new class into class list and class file loaded.
+     * \param newClass
+     * Parameter is new class name which is sent as a signal from the addclasswindow.
+     */
     void update_class_list_and_file_add(QString newClass){
 
         QString addClass = newClass + "\n";
@@ -159,6 +193,11 @@ private slots:
 
     }
 
+    /*!
+     * \brief update_class_list_and_file_delete
+     * Function called when a user deletes a class from the class pane, function deleted class form file and reloads class pane.
+     * \param deletedClass
+     */
     void update_class_list_and_file_delete(QString deletedClass){
 
         QFile f(MainWindow::classFile);
@@ -182,6 +221,16 @@ private slots:
 
     }
 
+    /*!
+     * \brief sortingName
+     * Function responsible for sorting a QStringList parsed to it, using a bubble Sort.
+     * \param item_list
+     * List of items to be sorted e.g names of class or image.
+     * \param ascending_or_descending
+     * Type of sort
+     * \return
+     * Returns a list of items in the correct order ready to be added to the ui.
+     */
     QStringList sortingName(QStringList item_list, QString ascending_or_descending){
 
         int size;
@@ -210,6 +259,12 @@ private slots:
         return item_list;
     }
 
+    /*!
+     * \brief sortImageNames
+     * Ran when user selects a sort for the images, based on the selected sort the switch dictates what will happen, uses sortingName class to get a sorted list for names and images_list.getModified to get a sorted list by date.
+     * \param index
+     * Index corresponds to the serting type chosen by user.
+     */
     void sortImageNames(int index){
 
         QStringList sorted_images;
@@ -242,6 +297,11 @@ private slots:
         }
     }
 
+    /*!
+     * \brief sortClassNames
+     * Ran when user selects a sort for the class, based on the selected sort the switch dictates what will happen, uses sortingName class to get a sorted list for names
+     * \param index
+     */
     void sortClassNames(int index){
 
         QStringList sorted_classes;
@@ -266,6 +326,12 @@ private slots:
         }
     }
 
+    /*!
+     * \brief imageListCurrentTextChange
+     * Responsible for the changing of the image displayed in the canvas based on the text selected in the imagePane.
+     * \param currentText
+     * Name of image selected in image pane.
+     */
     void imageListCurrentTextChange(QString currentText){
 
         for(int i = 0 ; i < ui->canvas->imageList.size(); i++){
@@ -309,6 +375,10 @@ private slots:
             }
     }
 
+    /*!
+     * \brief readClassFile
+     * Funciton ran when user decides to select a class file, opening a file interface and setting up lists for class items.
+     */
     void readClassFile(){
         QString filter = "Class File (*.names)";
 
@@ -348,6 +418,10 @@ private slots:
        }
     }
 
+    /*!
+     * \brief readImagesDirectory#
+     * Function ran when user selects image directory, opening a file interface and setting up lists for storing image data.
+     */
     void readImagesDirectory(){
         int lineNum = 0;
 
@@ -382,6 +456,10 @@ private slots:
         ui->folder_Path_Image->setText(folder_name);
     }
 
+    /*!
+     * \brief readAnnotationFile
+     * Function ran when user loads a annotation file, responsible for reading the file and passing the data into appropriate lists and objects to display the annotations.
+     */
     void readAnnotationFile(){
 
         QString json_filter = "JSON (*.json)";
@@ -469,9 +547,6 @@ private slots:
             }
         }
     }
-
-
-
 
 
 
