@@ -11,7 +11,7 @@ bool List::IsEmpty(){
 
     return head == nullptr;
 }
-
+//Insert node for class
 Node* List::InsertNodeClass(int index, QString name){
     if (index <0){
         return NULL;
@@ -39,6 +39,8 @@ Node* List::InsertNodeClass(int index, QString name){
     }
     return newNode;
 }
+
+//Insert new node with extra data for image, path and last modified
 Node* List::InsertNodeImage(int index, QString name,QString path,QString lastModified){
     if (index <0){
         return NULL;
@@ -87,6 +89,7 @@ int List::FindNodeGiveIndex(QString x){
     }
     return 0;
 }
+//Find node by name return path
 QString List::FindNodeGivePath(QString x){
     Node* currNode = head;
     int currIndex = 1;
@@ -102,7 +105,7 @@ QString List::FindNodeGivePath(QString x){
     return 0;
 }
 
-
+//Delete node with given name
 int List::DeleteNode(QString x){
     Node* prevNode = nullptr;
     Node* currNode = head;
@@ -126,7 +129,7 @@ int List::DeleteNode(QString x){
     return 0;
 }
 
-
+//Get name list of all items in list
 void List::GetNameList(void){
     QStringList namesList;
     namesList.clear();
@@ -139,6 +142,7 @@ void List::GetNameList(void){
    name_List = namesList;
 }
 
+//Get all values for modified and image names, sort by modified date
 QStringList List::GetModifiedList(QString sortType){
     vector<QPair<QString,int>> list;
     QStringList namesList;
@@ -146,6 +150,7 @@ QStringList List::GetModifiedList(QString sortType){
     while (currNode != NULL){
        QString image_name = currNode->imageName;
        QString last_mod = currNode->lastMod;
+       //Use Q pairs of name and last modified
        list.push_back(QPair<QString,int>(image_name,last_mod.toInt()));
        currNode = currNode -> next;
     }
@@ -168,9 +173,10 @@ QStringList List::GetModifiedList(QString sortType){
     for(auto item:list){
         namesList.append(item.first);
     }
+    //Return list of names sorted, can be used for ui element.
     return namesList;
 }
-
+//Count number of items in list.
 int List::CountItems(void){
     int num = 0;
     Node* currNode = head;
@@ -182,6 +188,7 @@ int List::CountItems(void){
     return num;
 }
 
+//List destructor.
 List::~List(void){
     Node* currNode = head, *nextNode = NULL;
     while(currNode != NULL){

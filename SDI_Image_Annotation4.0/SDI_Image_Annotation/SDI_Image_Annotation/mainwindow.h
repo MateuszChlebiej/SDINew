@@ -134,18 +134,18 @@ public:
     QJsonArray coorJsonArray;
     QJsonObject coorJsonObject;
     QJsonObject pointJsonObject;
-
+    //Go through each polygon in polygonList
     for(int i = 0; i < ui->canvas->imageList[imageIndex].polygonList.size(); i++){
 
         int numOfPoints = ui->canvas->imageList[imageIndex].polygonList[i].shape.size();
-
+        //Go through each point for shape
         for(int j = 0; j < numOfPoints; j++){
 
             pointJsonObject.insert("X",ui->canvas->imageList[imageIndex].polygonList[i].shape[j].x());
             pointJsonObject.insert("Y",ui->canvas->imageList[imageIndex].polygonList[i].shape[j].y());
             coorJsonArray.append(pointJsonObject);
         }
-
+        //For each polygon in polygon list save the data required
         coorJsonObject.insert("Amout of points",numOfPoints);
         coorJsonObject.insert("Shape Type",ui->canvas->imageList[imageIndex].polygonList[i].shapeName);
         coorJsonObject.insert("Shape Class",ui->canvas->imageList[imageIndex].polygonList[i].className);
@@ -156,10 +156,14 @@ public:
         shapeJsonArray.append(coorJsonObject);
 
     }
+
     imagesJsonObject.insert("Image name",ui->canvas->imageList[imageIndex].fileName);
+    //Insert deeper nested array into image object
     imagesJsonObject.insert("Shapes",shapeJsonArray);
+    //Add image object into images array.
     imagesJsonArray.append(imagesJsonObject);
 
+    //Return array of image objects.
     return imagesJsonArray;
 }
 public slots:
@@ -187,12 +191,16 @@ private slots:
 
         const char *converted = addClass.toLatin1().data();
 
+        //Open file and add the new class to it.
         QFile f(MainWindow::classFile);
         if (f.open(QIODevice::WriteOnly | QIODevice::Append)) {
             f.write(converted);
             f.close();
+            //Add new class to ui element
             ui->class_List->addItem(newClass);
+            //Add new class to classes linked list
             classes_list.InsertNodeClass(classes_list.CountItems(),newClass);
+            //Refresh the names list of classes in list.
             classes_list.GetNameList();
             qDebug()<<classes_list.name_List;
 
@@ -209,7 +217,7 @@ private slots:
      * \param deletedClass
      */
     void update_class_list_and_file_delete(QString deletedClass){
-
+        //Open file and delete line containing deleted class
         QFile f(MainWindow::classFile);
         if(f.open(QIODevice::ReadWrite | QIODevice::Text)){
             QString s;
@@ -224,9 +232,13 @@ private slots:
             t << s;
             f.close();
         }
+        //Delete node from classes list
         classes_list.DeleteNode(deletedClass);
+        //Refresh classes list name list
         classes_list.GetNameList();
+        //Clear Ui element
         ui->class_List->clear();
+        //Readd items to ui element
         ui->class_List->addItems(classes_list.name_List);
 
     }
@@ -242,7 +254,7 @@ private slots:
      * Returns a list of items in the correct order ready to be added to the ui.
      */
     QStringList sortingName(QStringList item_list, QString ascending_or_descending){
-
+    //Bubble sort
         int size;
         size = item_list.count();
         for(int i = 0; i < size; i++){
@@ -266,6 +278,7 @@ private slots:
                 }
             }
         }
+        //Return list of items which can be adde dto ui element.
         return item_list;
     }
 
@@ -356,11 +369,12 @@ private slots:
             }
             else{
 
+                //Get filepath from linked list of the image selected
                 QString filepath = images_list.FindNodeGivePath(currentText);
                 //qDebug()<<filepath;
                 //qDebug()<<ui->canvas->imageList.size();
 
-
+                //Set current image value for canvas
                 for(Image image: ui->canvas->imageList){
                     if(operator==(filepath,image.filePath)){
 
@@ -371,14 +385,16 @@ private slots:
                     }
                 }
 
+                //Set current image name
                 ui->canvas->currentImage.fileName = currentText;
+
                 QImage LoadedImg(filepath);
                 ui->canvas->currentImage.image = LoadedImg;
 
                 //Send corresponding image to canvas.
 
                 ui->canvas->setPixmap(QPixmap::fromImage(canvas.currentImage.image));
-                //set canvas image to current image
+
 
 
                 //qDebug()<<ui->canvas->imageList.size();
@@ -422,8 +438,11 @@ private slots:
 
         file.close();
 
+        //Set names list for class list
         classes_list.GetNameList();
+
         qDebug()<<classes_list.name_List;
+        //Set file path element of ui.
         ui->folder_Path_Class->setText(file.fileName());
        }
     }
@@ -461,6 +480,7 @@ private slots:
             }
 
        }
+        //Set names list for images list
         images_list.GetNameList();
         //Change gui label showing path of current directory.
         ui->folder_Path_Image->setText(folder_name);
@@ -482,8 +502,6 @@ private slots:
         }
 
         else{
-
-
 
             QJsonDocument doc;
             QJsonObject obj;
@@ -513,7 +531,7 @@ private slots:
                     array = doc.array();
 
 
-
+                    //Loop through each object in image array
                      QJsonArray imageArray = obj["Images"].toArray();
                      foreach(const QJsonValue & value, imageArray){
                          QJsonArray imageArray = value.toArray();
@@ -525,30 +543,37 @@ private slots:
 
                              for(int i = 0; i < ui->canvas->imageList.size(); i++){
                                  QString imageNameFromList = ui->canvas->imageList[i].fileName;
+                                 //Check if image name is in ui element for images, if yes set image index to use later.
                                  if(imageName == imageNameFromList){
                                      image_index = i;
                                  }
                              }
                              QJsonArray shapesArray = obj["Shapes"].toArray();
+                             //Loop through each shape
                              foreach(const QJsonValue & value,shapesArray){
                                  QPolygon polygon;
                                  QJsonObject obj = value.toObject();
                                  //int amountOfPoints = obj["Amout of points"].toInt();
+                                 //Get shape data
                                  QString shapeClass = obj["Shape Class"].toString();
                                  QString shapeType =  obj["Shape Type"].toString();
                                  QJsonArray pointsArray = obj["Points"].toArray();
+                                 //Loop through each point
                                  foreach(const QJsonValue & value,pointsArray){
                                       QJsonObject obj = value.toObject();
+                                      //Get point x and y data
                                       int pointX = obj["X"].toInt();
                                       int pointY = obj["Y"].toInt();
                                       QPoint point = QPoint(pointX,pointY);
                                       polygon.append(point);
                                  }
+                                 //Push all gathered data to canvas
                                  ui->canvas->imageList[image_index].polygonList.append(Shapes(shapeClass,polygon));
                              }
                          }
                      }
                  }
+                //Set flag for annotation file loaded
                 annotationFileLoaded = true;
             }
 
