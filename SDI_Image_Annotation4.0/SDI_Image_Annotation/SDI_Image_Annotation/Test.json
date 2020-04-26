@@ -1,0 +1,323 @@
+{
+    "Amount of images": 5,
+    "Images": [
+        [
+            {
+                "Image name": "chineseLanterns",
+                "Shapes": [
+                    {
+                        "Amout of points": 4,
+                        "Points": [
+                            {
+                                "X": 228,
+                                "Y": 193
+                            },
+                            {
+                                "X": 422,
+                                "Y": 193
+                            },
+                            {
+                                "X": 422,
+                                "Y": 400
+                            },
+                            {
+                                "X": 228,
+                                "Y": 400
+                            }
+                        ],
+                        "Shape Class": "Boris",
+                        "Shape Type": ""
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "Image name": "chineseLanternsv2",
+                "Shapes": [
+                    {
+                        "Amout of points": 4,
+                        "Points": [
+                            {
+                                "X": 164,
+                                "Y": 140
+                            },
+                            {
+                                "X": 241,
+                                "Y": 140
+                            },
+                            {
+                                "X": 241,
+                                "Y": 253
+                            },
+                            {
+                                "X": 164,
+                                "Y": 253
+                            }
+                        ],
+                        "Shape Class": "Boris",
+                        "Shape Type": ""
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "Image name": "puppy",
+                "Shapes": [
+                    {
+                        "Amout of points": 3,
+                        "Points": [
+                            {
+                                "X": 203,
+                                "Y": 157
+                            },
+                            {
+                                "X": 283,
+                                "Y": 270
+                            },
+                            {
+                                "X": 203,
+                                "Y": 270
+                            }
+                        ],
+                        "Shape Class": "Jimmer",
+                        "Shape Type": "Triangle"
+                    },
+                    {
+                        "Amout of points": 3,
+                        "Points": [
+                            {
+                                "X": 380,
+                                "Y": 155
+                            },
+                            {
+                                "X": 469,
+                                "Y": 243
+                            },
+                            {
+                                "X": 380,
+                                "Y": 243
+                            }
+                        ],
+                        "Shape Class": "Jimmer",
+                        "Shape Type": "Triangle"
+                    },
+                    {
+                        "Amout of points": 3,
+                        "Points": [
+                            {
+                                "X": 258,
+                                "Y": 59
+                            },
+                            {
+                                "X": 307,
+                                "Y": 135
+                            },
+                            {
+                                "X": 258,
+                                "Y": 135
+                            }
+                        ],
+                        "Shape Class": "Jimmer",
+                        "Shape Type": "Triangle"
+                    },
+                    {
+                        "Amout of points": 4,
+                        "Points": [
+                            {
+                                "X": 123,
+                                "Y": 239
+                            },
+                            {
+                                "X": 163,
+                                "Y": 239
+                            },
+                            {
+                                "X": 163,
+                                "Y": 422
+                            },
+                            {
+                                "X": 123,
+                                "Y": 422
+                            }
+                        ],
+                        "Shape Class": "Jimmer",
+                        "Shape Type": "Rectangle"
+                    },
+                    {
+                        "Amout of points": 4,
+                        "Points": [
+                            {
+                                "X": 319,
+                                "Y": 334
+                            },
+                            {
+                                "X": 383,
+                                "Y": 334
+                            },
+                            {
+                                "X": 383,
+                                "Y": 433
+                            },
+                            {
+                                "X": 319,
+                                "Y": 433
+                            }
+                        ],
+                        "Shape Class": "Jimmer",
+                        "Shape Type": "Rectangle"
+                    },
+                    {
+                        "Amout of points": 4,
+                        "Points": [
+                            {
+                                "X": 502,
+                                "Y": 300
+                            },
+                            {
+                                "X": 583,
+                                "Y": 300
+                            },
+                            {
+                                "X": 583,
+                                "Y": 417
+                            },
+                            {
+                                "X": 502,
+                                "Y": 417
+                            }
+                        ],
+                        "Shape Class": "Hello",
+                        "Shape Type": "Rectangle"
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "Image name": "rose",
+                "Shapes": [
+                    {
+                        "Amout of points": 4,
+                        "Points": [
+                            {
+                                "X": 139,
+                                "Y": 76
+                            },
+                            {
+                                "X": 235,
+                                "Y": 76
+                            },
+                            {
+                                "X": 235,
+                                "Y": 168
+                            },
+                            {
+                                "X": 139,
+                                "Y": 168
+                            }
+                        ],
+                        "Shape Class": "Boris",
+                        "Shape Type": ""
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "Image name": "yoda",
+                "Shapes": [
+                    {
+                        "Amout of points": 4,
+                        "Points": [
+                            {
+                                "X": 70,
+                                "Y": 160
+                            },
+                            {
+                                "X": 114,
+                                "Y": 160
+                            },
+                            {
+                                "X": 114,
+                                "Y": 216
+                            },
+                            {
+                                "X": 70,
+                                "Y": 216
+                            }
+                        ],
+                        "Shape Class": "Boris",
+                        "Shape Type": ""
+                    },
+                    {
+                        "Amout of points": 3,
+                        "Points": [
+                            {
+                                "X": 177,
+                                "Y": 172
+                            },
+                            {
+                                "X": 290,
+                                "Y": 239
+                            },
+                            {
+                                "X": 177,
+                                "Y": 239
+                            }
+                        ],
+                        "Shape Class": "Jimmer",
+                        "Shape Type": ""
+                    },
+                    {
+                        "Amout of points": 4,
+                        "Points": [
+                            {
+                                "X": 92,
+                                "Y": 85
+                            },
+                            {
+                                "X": 98,
+                                "Y": 85
+                            },
+                            {
+                                "X": 140,
+                                "Y": 119
+                            },
+                            {
+                                "X": 50,
+                                "Y": 119
+                            }
+                        ],
+                        "Shape Class": "Jimmer",
+                        "Shape Type": ""
+                    },
+                    {
+                        "Amout of points": 4,
+                        "Points": [
+                            {
+                                "X": 234,
+                                "Y": 73
+                            },
+                            {
+                                "X": 266,
+                                "Y": 73
+                            },
+                            {
+                                "X": 316,
+                                "Y": 142
+                            },
+                            {
+                                "X": 184,
+                                "Y": 142
+                            }
+                        ],
+                        "Shape Class": "Brosky",
+                        "Shape Type": ""
+                    }
+                ]
+            }
+        ]
+    ]
+}

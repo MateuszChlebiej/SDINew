@@ -11,11 +11,7 @@ Canvas::Canvas(QWidget *parent)
     setAttribute(Qt::WA_StaticContents);
     setMouseTracking(true);
     QPolygon test;
-    //currentImage = Image();
-//    test.setPoints(2,100,100,300,300);
-//    polygonList.append(test);
 }
-
 void Canvas::mousePressEvent(QMouseEvent *ev){
     lastMousePos = ev->pos();
     if (ev->button() == Qt::LeftButton){
@@ -87,7 +83,8 @@ void Canvas::mousePressEvent(QMouseEvent *ev){
                        }
                    }
                }
-               // start drawing if normal shape selected
+
+        // start drawing if normal shape selected
         if(shapeIndex >= 0 && shapeIndex <= 2){
             drawing = true;
         }
@@ -193,7 +190,7 @@ void Canvas::paintEvent(QPaintEvent *ev){
     if(shapeIndex == 0){
 
         currentImage.currentPolygon.shape.setPoints(4,lastMousePos.x(),lastMousePos.y(),currentMousePos.x(),lastMousePos.y(),currentMousePos.x(),currentMousePos.y(),lastMousePos.x(),currentMousePos.y());
-
+        currentImage.currentPolygon.shapeName = "Rectangle";
 
     }
 
@@ -206,12 +203,14 @@ void Canvas::paintEvent(QPaintEvent *ev){
 
         //set points of trapezium
         currentImage.currentPolygon.shape.setPoints(4,lastMousePos.x(),lastMousePos.y(),v2->x(),v2->y(),currentMousePos.x(),currentMousePos.y(),v3->x(),v3->y());
+        currentImage.currentPolygon.shapeName ="Trapezium";
        // painter.drawPolygon(currentImage.currentPolygon);
     }
 
     else if(shapeIndex == 2){
         QPoint* tv2 =new QPoint(lastMousePos.x() ,currentMousePos.y());
         currentImage.currentPolygon.shape.setPoints(3,lastMousePos.x(),lastMousePos.y(),currentMousePos.x(),currentMousePos.y(),tv2->x(),tv2->y());
+        currentImage.currentPolygon.shapeName = "Triangle";
         qDebug() << "v2 is" << tv2->x() << tv2->y();
         //painter.drawPolygon(currentImage.currentPolygon);
     }

@@ -1,9 +1,9 @@
 #ifndef IMAGE_H
 #define IMAGE_H
-
-#include <QObject>
+#include<QObject>
 #include<QLabel>
 #include "shape.h"
+
 class Image
 {
 
@@ -45,7 +45,7 @@ public:
      *overloaded image constructor to initialise with parameters
      * \param image, file name
      */
-    Image(QImage imageData,QString filename);
+    Image(QImage imageData,QString filename, QString filePath);
 
 
     /*!

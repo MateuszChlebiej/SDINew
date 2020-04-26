@@ -21,7 +21,7 @@
 #include "canvas.h"
 #include "addclasswindow.h"
 #include "list.h"
-#include"autoSaveThread.h"
+#include "autoSaveThread.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -45,63 +45,22 @@ MainWindow::~MainWindow()
 //SELECTING IMAGE DIRECTORY
 void MainWindow::on_btn_Select_Image_Folder_clicked()
 {
-    readImagesDirectory();
+    try {
+          readImagesDirectory();
+    } catch (...) {
+        qDebug()<< "Failed to load in from images directory";
+    }
+
 
 }
 
 //SELECTING AN IMAGE TO LOAD INTO CANVAS
 void MainWindow::on_image_List_currentTextChanged(const QString &currentText)
 {
-//    for(Image image: ui->canvas->imageList){
-//        if(operator==(ui->canvas->currentImage.fileName,image.fileName)){
-//            //replace image
-//            qDebug() << "image has " << ui->canvas->currentImage.polygonList.size() << " shapes";
-//            image = ui->canvas->currentImage;
-//            qDebug() << "image saved with " << image.polygonList.size() << " shapes";
-////            qDebug() << "current poly has " << ui->canvas->currentImage.currentPolygon.size() << "corners";
-//            break;
-//        }
-//    }
-    for(int i = 0 ; i < ui->canvas->imageList.size();i++){
-        if(operator==(ui->canvas->currentImage.filePath,ui->canvas->imageList[i].filePath)){
-            ui->canvas->imageList.replace(i,ui->canvas->currentImage);
-        }
-    }
 
-
-    if(currentText == ""){
-        //qDebug() << "NoItem";
-    }
-    else{
-
-        QString filepath = images_list.FindNodeGivePath(currentText);
-        qDebug()<<filepath;
-        qDebug()<<ui->canvas->imageList.size();
-
-
-        for(Image image: ui->canvas->imageList){
-            if(operator==(filepath,image.filePath)){
-
-                ui->canvas->currentImage = image;
-                qDebug() << "image loaded with " << ui->canvas->currentImage.polygonList.size() << " shapes";
-                //qDebug() << "current poly has " << ui->canvas->currentImage.currentPolygon.size() << "corners";
-                break;
-            }
-        }
-
-        ui->canvas->currentImage.fileName = currentText;
-        QImage LoadedImg(filepath);
-        ui->canvas->currentImage.image = LoadedImg;
-
-        //Send corresponding image to canvas.
-
-        ui->canvas->setPixmap(QPixmap::fromImage(canvas.currentImage.image));
-        //set canvas image to current image
-
-
-        qDebug()<<ui->canvas->imageList.size();
-    }
+    imageListCurrentTextChange(currentText);
 }
+
 
 //SELECTING FILE FOR CLASS FILES
 void MainWindow::on_btn_Select_Class_File_clicked()
@@ -113,79 +72,22 @@ void MainWindow::on_btn_Select_Class_File_clicked()
 
 void MainWindow::on_dropdown_Sort_Image_activated(int index)
 {
-    QStringList sorted_images;
-    switch(index){
-        case 0:
-            ui->image_List->clear();
-            sorted_images = sortingName(images_list.name_List, ">");
-            ui->image_List->addItems(sorted_images);
-
-        break;
-
-        case 1:
-            ui->image_List->clear();
-            sorted_images = sortingName(images_list.name_List, "<");
-            ui->image_List->addItems(sorted_images);
-
-        break;
-
-        case 2:
-            ui->image_List->clear();
-            sorted_images = images_list.GetModifiedList("Ascending");
-            ui->image_List->addItems(sorted_images);
-        break;
-
-        case 3:
-            ui->image_List->clear();
-            sorted_images = images_list.GetModifiedList("Descending");
-            ui->image_List->addItems(sorted_images);
-        break;
-    }
+    sortImageNames(index);
 }
 
 void MainWindow::on_dropdown_Sort_Class_activated(int index)
 {
-    QStringList sorted_classes;
-    switch(index){
-        case 0:
-
-            ui->class_List->clear();
-            qDebug()<<classes_list.name_List;
-            sorted_classes = sortingName(classes_list.name_List,">");
-            qDebug()<<sorted_classes;
-            ui->class_List->addItems(sorted_classes);
-
-        break;
-
-        case 1:
-            ui->class_List->clear();
-            sorted_classes = sortingName(classes_list.name_List,"<");
-
-            qDebug()<<sorted_classes;
-            ui->class_List->addItems(sorted_classes);
-            qDebug()<<classes_list.name_List;
-        break;
-    }
+    sortClassNames(index);
 }
 
 //may require seperate index for number of polygon verticies
 void MainWindow::on_canvas_pressed(){
-//    QPoint mouse = QCursor::pos();
-//    QVector2D mousePos;
-//    mousePos.setX(mouse.x());
-//    mousePos.setY((mouse.y()));
 
-//    if(canvas.shapeIndex == 0){
-//        //Rectangle * rect = new Rectangle(&mousePos);
-//    }
-//    else if (canvas.shapeIndex == 1){
-
-//    }
 }
 
 void MainWindow::on_rad_Btn_Rectangle_toggled(bool checked)
 {
-    //shapeIndex = 0;
+
     ui->canvas->shapeIndex=0;
 
 
@@ -226,7 +128,12 @@ void MainWindow::on_btn_Delete_Class_clicked()
 
 void MainWindow::on_btn_Save_Annotation_clicked()
 {
-   saveAnnotationFile();
+    for(int i = 0 ; i < ui->canvas->imageList.size();i++){
+        if(operator==(ui->canvas->currentImage.filePath,ui->canvas->imageList[i].filePath)){
+            ui->canvas->imageList.replace(i,ui->canvas->currentImage);
+        }
+    }
+   saveAnnotationFile("Manual Save");
 }
 
 void MainWindow::on_btn_Load_Annotation_clicked()

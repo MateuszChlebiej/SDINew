@@ -1,6 +1,5 @@
 #ifndef AUTOSAVETHREAD_H
 #define AUTOSAVETHREAD_H
-
 #endif // AUTOSAVETHREAD_H
 #include <QThread>
 #pragma once

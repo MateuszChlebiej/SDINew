@@ -1,14 +1,14 @@
 #ifndef SHAPE_H
 #define SHAPE_H
-
 #endif // SHAPE_H
-
 #include <QMainWindow>
 #include <QGraphicsOpacityEffect>
 #include <QPainter>
 #include <QtQuick/QQuickItem>
 #include <QVector2D>
 #pragma once
+
+
 class Shapes {
     //Q_OBJECT
 

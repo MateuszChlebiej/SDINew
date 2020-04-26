@@ -1,11 +1,11 @@
 #include "image.h"
 
-Image::Image(QImage imageData, QString filename)
+Image::Image(QImage image_data, QString file_name, QString file_path)
 {
     //set parameters
-    image = imageData;
-    fileName = filename;
-    filePath = filename;
+    image = image_data;
+    fileName = file_name;
+    filePath = file_path;
 }
 Image::Image(){}
 

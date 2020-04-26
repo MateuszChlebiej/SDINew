@@ -11,13 +11,12 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include "ui_mainwindow.h"
-#include "annotationclass.h"
 #include "image.h"
-#include"canvas.h"
+#include "canvas.h"
 #include "addclasswindow.h"
 #include "class.h"
 #include "list.h"
-#include"autoSaveThread.h"
+#include "autoSaveThread.h"
 #pragma once
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -36,14 +35,105 @@ public:
 
     QString classFile;
 
-    QString classFilePath;
-
     Canvas canvas;
+
+    bool annotationFileLoaded;
+
+    QString annotationFileLoadedPath;
+
     /*!
          * \brief shape index
          * shape index that is sent to canvas
          */
     static int shapeIndex;
+
+    void saveAnnotationFile(QString mode){
+
+        QString file;
+
+        QJsonObject document;
+        QJsonArray documentArray;
+
+
+        for(int i = 0; i < ui->canvas->imageList.size(); i++){
+
+            documentArray.append(dataSaveHelp(i));
+
+        }
+        document.insert("Amount of images",ui->canvas->imageList.size());
+        document.insert("Images",documentArray);
+
+
+    QString json_filter = "JSON (*.json)";
+
+    if(mode == "Manual Save"){
+         file = QFileDialog::getSaveFileName(this,tr("Save File"),"/",json_filter);
+    }
+
+    if(mode == "AutoSave"){
+        file = annotationFileLoadedPath;
+    }
+
+    if(file.isEmpty()){
+
+    }
+    else{
+
+        QJsonDocument doc(document);
+        qDebug() << doc.toJson();
+
+
+        QByteArray data_json = doc.toJson();
+        QFile output(file);
+        if(output.open(QIODevice::WriteOnly | QIODevice::Text)){
+            output.write(data_json);
+            output.close();
+            QMessageBox::information(this,tr("Message"),tr("Document saved"));
+        }
+        else{
+            QMessageBox::critical(this,tr("Error"),output.errorString());
+        }
+    }
+}
+
+    QJsonArray dataSaveHelp(int imageIndex){
+
+    QJsonArray imagesJsonArray;
+    QJsonObject imageHoldObject;
+    QJsonObject imagesJsonObject;
+    QJsonArray shapeJsonArray;
+    QJsonObject shapeJsonObject;
+    QJsonArray coorJsonArray;
+    QJsonObject coorJsonObject;
+    QJsonObject pointJsonObject;
+
+    for(int i = 0; i < ui->canvas->imageList[imageIndex].polygonList.size(); i++){
+
+        int numOfPoints = ui->canvas->imageList[imageIndex].polygonList[i].shape.size();
+
+        for(int j = 0; j < numOfPoints; j++){
+
+            pointJsonObject.insert("X",ui->canvas->imageList[imageIndex].polygonList[i].shape[j].x());
+            pointJsonObject.insert("Y",ui->canvas->imageList[imageIndex].polygonList[i].shape[j].y());
+            coorJsonArray.append(pointJsonObject);
+        }
+
+        coorJsonObject.insert("Amout of points",numOfPoints);
+        coorJsonObject.insert("Shape Type",ui->canvas->imageList[imageIndex].polygonList[i].shapeName);
+        coorJsonObject.insert("Shape Class",ui->canvas->imageList[imageIndex].polygonList[i].className);
+        coorJsonObject.insert("Points",coorJsonArray);
+        for(int y = 0; y < numOfPoints; y++){
+            coorJsonArray.removeFirst();
+        }
+        shapeJsonArray.append(coorJsonObject);
+
+    }
+    imagesJsonObject.insert("Image name",ui->canvas->imageList[imageIndex].fileName);
+    imagesJsonObject.insert("Shapes",shapeJsonArray);
+    imagesJsonArray.append(imagesJsonObject);
+
+    return imagesJsonArray;
+}
 
 private slots:
 
@@ -96,28 +186,127 @@ private slots:
 
         int size;
         size = item_list.count();
-        for(int i = 0; i< size; i++){
-            for(int j=0; j<size-1; j++){
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j<size-1; j++){
 
                 if(ascending_or_descending == ">"){
-                    if(item_list[j]>item_list[j+1]){
+                    if(item_list[j] > item_list[j + 1]){
                         QString tmp;
                         tmp = item_list[j];
                         item_list[j] = item_list[j+1];
-                        item_list[j+1] = tmp;
+                        item_list[j + 1] = tmp;
                     }
                 }
                 if(ascending_or_descending == "<"){
-                    if(item_list[j]<item_list[j+1]){
+                    if(item_list[j] < item_list[j + 1]){
                         QString tmp;
                         tmp = item_list[j];
-                        item_list[j] = item_list[j+1];
-                        item_list[j+1] = tmp;
+                        item_list[j] = item_list[j + 1];
+                        item_list[j + 1] = tmp;
                     }
                 }
             }
         }
         return item_list;
+    }
+
+    void sortImageNames(int index){
+
+        QStringList sorted_images;
+        switch(index){
+            case 0:
+                ui->image_List->clear();
+                sorted_images = sortingName(images_list.name_List, ">");
+                ui->image_List->addItems(sorted_images);
+
+            break;
+
+            case 1:
+                ui->image_List->clear();
+                sorted_images = sortingName(images_list.name_List, "<");
+                ui->image_List->addItems(sorted_images);
+
+            break;
+
+            case 2:
+                ui->image_List->clear();
+                sorted_images = images_list.GetModifiedList("Ascending");
+                ui->image_List->addItems(sorted_images);
+            break;
+
+            case 3:
+                ui->image_List->clear();
+                sorted_images = images_list.GetModifiedList("Descending");
+                ui->image_List->addItems(sorted_images);
+            break;
+        }
+    }
+
+    void sortClassNames(int index){
+
+        QStringList sorted_classes;
+        switch(index){
+            case 0:
+
+                ui->class_List->clear();
+                //qDebug()<<classes_list.name_List;
+                sorted_classes = sortingName(classes_list.name_List,">");
+                //qDebug()<<sorted_classes;
+                ui->class_List->addItems(sorted_classes);
+
+            break;
+
+            case 1:
+                ui->class_List->clear();
+                sorted_classes = sortingName(classes_list.name_List,"<");
+                //qDebug()<<sorted_classes;
+                ui->class_List->addItems(sorted_classes);
+                //qDebug()<<classes_list.name_List;
+            break;
+        }
+    }
+
+    void imageListCurrentTextChange(QString currentText){
+
+        for(int i = 0 ; i < ui->canvas->imageList.size(); i++){
+                if(operator==(ui->canvas->currentImage.filePath,ui->canvas->imageList[i].filePath)){
+                    ui->canvas->imageList.replace(i,ui->canvas->currentImage);
+                }
+            }
+
+
+            if(currentText == ""){
+                //qDebug() << "NoItem";
+            }
+            else{
+
+                QString filepath = images_list.FindNodeGivePath(currentText);
+                //qDebug()<<filepath;
+                //qDebug()<<ui->canvas->imageList.size();
+
+
+                for(Image image: ui->canvas->imageList){
+                    if(operator==(filepath,image.filePath)){
+
+                        ui->canvas->currentImage = image;
+                        //qDebug() << "image loaded with " << ui->canvas->currentImage.polygonList.size() << " shapes";
+                        //qDebug() << "current poly has " << ui->canvas->currentImage.currentPolygon.size() << "corners";
+                        break;
+                    }
+                }
+
+                ui->canvas->currentImage.fileName = currentText;
+                QImage LoadedImg(filepath);
+                ui->canvas->currentImage.image = LoadedImg;
+
+                //Send corresponding image to canvas.
+
+                ui->canvas->setPixmap(QPixmap::fromImage(canvas.currentImage.image));
+                //set canvas image to current image
+
+
+                //qDebug()<<ui->canvas->imageList.size();
+            }
     }
 
     void readClassFile(){
@@ -132,6 +321,7 @@ private slots:
 
         if (!file.open(QFile::ReadOnly | QFile::Text)){
             QMessageBox::warning(this,"title","file not open");
+            ui->class_List->clear();
         }
 
         QTextStream in(&file);
@@ -139,12 +329,6 @@ private slots:
 
             //Each line = different class/
             QString class_name = in.readLine();
-
-            //New instance of AnnotationClass class,  NEEDS TO BE MADE SO IT IS STORED IN AN ARRAY, THEN MOST OF ABOVE STORAGE IS NOT NEEDED!!!!
-            AnnotationClass object_name;
-
-            //Set current objects name and line number.
-            object_name.set_name_and_line(class_name,line_number);
 
             //Display items in class_List.
             ui->class_List->addItem(class_name);
@@ -187,7 +371,8 @@ private slots:
 
                 QImage image = QImage(var.filePath());
                 images_list.InsertNodeImage(lineNum,var.baseName(),var.filePath(),lastMod);
-                ui->canvas->imageList.append(Image(image,var.filePath()));
+                ui->canvas->imageList.append(Image(image,var.baseName(),var.filePath()));
+
                 lineNum++;
             }
 
@@ -197,120 +382,92 @@ private slots:
         ui->folder_Path_Image->setText(folder_name);
     }
 
-    void saveAnnotationFile(){
-
-        //get size of imageslist
-        //go through images list, each image at a time, for each image
-            //get image name
-            //go through imagepolygonList
-                //get shape type
-                //get amount of coordinates
-                //get coordinates
-
-        /*int list_size = canvas.imageList.size();
-        QJsonObject recordObject;
-        recordObject.insert("Number of annotated images", QJsonValue::fromVariant(list_size));
-        for(int i = 0; i<list_size; i++){
-            QString image_name = canvas.imageList[i].fileName;
-            int shape_list_size = canvas.imageList[i].polygonList.size();
-            QJsonObject imageObject;
-            imageObject.insert("Image Name", image_name);
-            imageObject.insert("Number of shapes", shape_list_size);
-            for(int j = 0; j<shape_list_size; j++){
-                QString shape_type = canvas.imageList[i].polygonList[j].shapeName;
-                int shape_points_size = canvas,imageList[i].polygonList[j].pointsList.size(); ////////To be filled out as i dont know where coordniated are stored.
-                QJsonArray shapeVectorsArray;
-                shapeVectorsArray.push_back(shape_type);
-                shapeVectorsArray.push_back(amount of shape points);  //needs to be filled out
-                for(int k = 0; k<shape_points_size; k++){
-                    shapeVectorsArray.push_back("Shape Coordinate!!!!!");
-
-                }
-               imageObject.insert("Shape", shapeVectorsArray);
-            }
-        }
-
-
-
+    void readAnnotationFile(){
 
         QString json_filter = "JSON (*.json)";
-        QString file = QFileDialog::getSaveFileName(this,tr("Save File"),"/",json_filter);
-
-        if(file.isEmpty()){
-
-        }
-        else{
-
-            QJsonDocument doc(recordObject);
-            qDebug() << doc.toJson();
-
-
-            QByteArray data_json = doc.toJson();
-            QFile output(file);
-            if(output.open(QIODevice::WriteOnly | QIODevice::Text)){
-                output.write(data_json);
-                output.close();
-                QMessageBox::information(this,tr("Message"),tr("Document saved"));
-            }
-            else{
-                QMessageBox::critical(this,tr("Error"),output.errorString());
-            }
-        }*/
-    }
-
-    void readAnnotationFile(){
-       /* QString json_filter = "JSON (*.json)";
         QString file = QFileDialog::getOpenFileName(this,tr("Open File"),"/",json_filter);
+        annotationFileLoadedPath = file;
+        ui->folder_Path_Annotation->setText(file);
 
         if(file.isEmpty()){
+
         }
+
         else{
 
-            //Go through file, for each image
-                //Store image in annotated image list
-                //Go through each image shape
-                    //add to shapesList
-                    //add each point to shape points list
 
 
             QJsonDocument doc;
             QJsonObject obj;
+            QJsonArray array;
             QByteArray data_json;
+            QStringList imageNames;
+
+            QString imageName;
+            QString shapeClass;
+            QString shapeType;
+            int image_index;
+
+
             QFile input(file);
+
+
+
             if(input.open(QIODevice::ReadOnly | QIODevice::Text)){
-                data_json = input.readAll();
-                doc = doc.fromJson(data_json);
-                obj = doc.object();
 
-                QString value1 = obj["Value1"].toString();
-                qDebug()<<value1;
-                QString value2 = obj["Value2"].toString();
-                 qDebug()<<value2;
-                QString value3 = obj["Value3"].toString();
-                 qDebug()<<value3;
-                QString value4 = obj["Value4"].toString();
-                 qDebug()<<value4;
+                if(ui->canvas->imageList.size() < 1){
+                    return;
+                }
+                else{
+                    data_json = input.readAll();
+                    doc = doc.fromJson(data_json);
+                    obj = doc.object();
+                    array = doc.array();
 
-                 int number_of_images = obj["Number of annotated images"].toInt();
-                 for(int i = 0; i<number_of_images; i++){
-                     //add to annotated image list
-                      int number_of_shapes = obj["Number shapes"].toInt();
-                     for(int j = 0; j< number_of_shapes; j++){
-                         //add shape To Image shape list
-                         //set shape type
-                         //get number of points
-                         for(int k = 0; k< numberOfShapePoints; k++){
-                             //add point to list
+
+
+                     QJsonArray imageArray = obj["Images"].toArray();
+                     foreach(const QJsonValue & value, imageArray){
+                         QJsonArray imageArray = value.toArray();
+
+                         foreach(const QJsonValue & value,imageArray){
+                             QJsonObject obj = value.toObject();
+                             imageNames.append(obj["Image name"].toString());
+                             QString imageName = obj["Image name"].toString();
+
+                             for(int i = 0; i < ui->canvas->imageList.size(); i++){
+                                 QString imageNameFromList = ui->canvas->imageList[i].fileName;
+                                 if(imageName == imageNameFromList){
+                                     image_index = i;
+                                 }
+                             }
+                             QJsonArray shapesArray = obj["Shapes"].toArray();
+                             foreach(const QJsonValue & value,shapesArray){
+                                 QPolygon polygon;
+                                 QJsonObject obj = value.toObject();
+                                 //int amountOfPoints = obj["Amout of points"].toInt();
+                                 QString shapeClass = obj["Shape Class"].toString();
+                                 QString shapeType =  obj["Shape Type"].toString();
+                                 QJsonArray pointsArray = obj["Points"].toArray();
+                                 foreach(const QJsonValue & value,pointsArray){
+                                      QJsonObject obj = value.toObject();
+                                      int pointX = obj["X"].toInt();
+                                      int pointY = obj["Y"].toInt();
+                                      QPoint point = QPoint(pointX,pointY);
+                                      polygon.append(point);
+                                 }
+                                 ui->canvas->imageList[image_index].polygonList.append(Shapes(shapeClass,polygon));
+                             }
                          }
                      }
                  }
-
-                QMessageBox::information(this,tr("Message"),tr("Document Open"));
+                annotationFileLoaded = true;
             }
+
             else{
                  QMessageBox::critical(this,tr("Error"),input.errorString());
             }
-        }*/
+        }
     }
 
 
@@ -354,6 +511,7 @@ private slots:
     void on_btn_Save_Annotation_clicked();
 
     void on_btn_Load_Annotation_clicked();
+
     void on_Rad_Btn_Edit_toggled(bool checked);
 
     void on_rad_Btn_Polygon_toggled(bool checked);
