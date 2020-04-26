@@ -3,6 +3,11 @@
 #endif // AUTOSAVETHREAD_H
 #include <QThread>
 #pragma once
+
+/*!
+ * \brief The AutoSaveThread class
+ * Used to run the autosave feature
+ */
 class AutoSaveThread : public QThread {
     Q_OBJECT
 public:

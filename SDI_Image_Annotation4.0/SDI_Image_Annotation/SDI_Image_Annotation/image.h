@@ -4,6 +4,10 @@
 #include<QLabel>
 #include "shape.h"
 
+/*!
+ * \brief The Image class
+ * Responsible for instances of images, each image stores information about shapes related to them
+ */
 class Image
 {
 

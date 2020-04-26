@@ -7,6 +7,11 @@
 #include "shape.h"
 #include "image.h"
 #pragma once
+
+/*!
+ * \brief The Canvas class
+ * Main Drawing area, handles all events to to with canvas, like shape drawing images etc.
+ */
 class Canvas: public QLabel{
     Q_OBJECT
 

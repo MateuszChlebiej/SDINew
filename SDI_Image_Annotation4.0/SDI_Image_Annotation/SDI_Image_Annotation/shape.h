@@ -8,7 +8,10 @@
 #include <QVector2D>
 #pragma once
 
-
+/*!
+ * \brief The Shapes class
+ * Stores shape information, such as name, type, class associated and points.
+ */
 class Shapes {
     //Q_OBJECT
 

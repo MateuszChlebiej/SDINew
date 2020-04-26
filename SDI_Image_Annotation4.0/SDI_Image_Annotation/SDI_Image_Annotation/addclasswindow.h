@@ -4,6 +4,8 @@
 #include <QDialog>
 
 namespace Ui {
+
+
 class AddClassWindow;
 }
 
@@ -27,3 +29,4 @@ private:
 };
 
 #endif // ADDCLASSWINDOW_H
+
